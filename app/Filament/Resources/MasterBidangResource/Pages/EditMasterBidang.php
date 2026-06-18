@@ -14,13 +14,20 @@ class EditMasterBidang extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [
-            Actions\DeleteAction::make(),
-        ];
+        return [];
     }
 
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getSaveFormAction(),
+            $this->getCancelFormAction(),
+            \Filament\Actions\DeleteAction::make(),
+        ];
     }
 }

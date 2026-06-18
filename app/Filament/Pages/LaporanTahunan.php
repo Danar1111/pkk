@@ -27,6 +27,18 @@ class LaporanTahunan extends Page
         return '_blank';
     }
 
+    public static function getNavigationItems(): array
+    {
+        return [
+            \Filament\Navigation\NavigationItem::make('Laporan Tahunan')
+                ->group(static::getNavigationGroup())
+                ->icon(static::getNavigationIcon())
+                ->label(static::getNavigationLabel())
+                ->sort(static::getNavigationSort())
+                ->url(static::getNavigationUrl(), shouldOpenInNewTab: true),
+        ];
+    }
+
     public static function canAccess(): bool
     {
         $allowedRoles = AnnualReportSetting::getAllowedRoles();

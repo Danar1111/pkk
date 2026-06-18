@@ -14,9 +14,7 @@ class EditLkpReport extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [
-            Actions\DeleteAction::make(),
-        ];
+        return [];
     }
 
     protected function getRedirectUrl(): string
@@ -44,6 +42,9 @@ class EditLkpReport extends EditRecord
                 ->label('Batal')
                 ->icon('heroicon-m-x-circle')
                 ->color('gray'),
+            \Filament\Actions\DeleteAction::make()
+                ->label('Hapus')
+                ->icon('heroicon-m-trash'),
         ];
     }
 }

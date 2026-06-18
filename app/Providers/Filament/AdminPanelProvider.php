@@ -817,7 +817,7 @@ class AdminPanelProvider extends PanelProvider
                         border: 1px solid #E2E8F0 !important;
                         border-radius: 1rem !important;
                         box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04) !important;
-                        overflow: hidden !important;
+                        overflow: visible !important;
                     }
                     .fi-section-header {
                         background: transparent !important;
