@@ -9,6 +9,7 @@ use App\Models\MasterKecamatan;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -33,71 +34,115 @@ class LkpReportResource extends Resource
 
     protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationLabel = 'Laporan LKP';
+    protected static ?string $navigationLabel = 'Laporan Kegiatan';
 
-    protected static ?string $modelLabel = 'Laporan LKP';
+    protected static ?string $modelLabel = 'Laporan Kegiatan';
 
-    protected static ?string $pluralModelLabel = 'Laporan LKP';
+    protected static ?string $pluralModelLabel = 'Laporan Kegiatan';
 
-    protected static ?int $navigationSort = 0;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                \Filament\Schemas\Components\Section::make('Informasi Dasar')
-                    ->description('Pilih tingkat laporan dan bidang program pokok PKK')
-                    ->icon('heroicon-o-document-text')
+                // ── Section 1: Informasi Umum ──────────────────────────────
+                \Filament\Schemas\Components\Section::make('Informasi Umum')
+                    ->description('Isi data dasar laporan kegiatan PKK.')
+                    ->icon('heroicon-o-information-circle')
                     ->schema([
+                        // Hidden fields – auto-managed
                         Forms\Components\Hidden::make('user_id')
                             ->default(auth()->id()),
 
-                        Forms\Components\Radio::make('skala_lkp')
-                            ->label('Skala LKP')
+                        Forms\Components\Hidden::make('status')
+                            ->default('baru'),
+
+                        // Row 1: Tanggal Laporan | Nama Pelapor
+                        Forms\Components\DatePicker::make('created_at')
+                            ->label('Tanggal Laporan')
+                            ->default(now())
+                            ->required()
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
+                            ->placeholder('dd/mm/yyyy'),
+
+                        Forms\Components\TextInput::make('nama_pelapor')
+                            ->label('Nama Pelapor')
+                            ->default(fn () => auth()->user()?->name)
+                            ->readOnly()
+                            ->required()
+                            ->dehydrated(false)
+                            ->placeholder('Masukkan nama lengkap'),
+
+                        // Row 2: Skala Laporan | Bidang / Kategori
+                        Forms\Components\Select::make('skala_lkp')
+                            ->label('Skala Laporan')
                             ->options([
                                 'Kabupaten' => 'Kabupaten',
                                 'Kecamatan' => 'Kecamatan',
                             ])
                             ->required()
-                            ->inline()
-                            ->inlineLabel(false)
+                            ->placeholder('Pilih Skala')
                             ->live()
-                            ->default('Kabupaten')
-                            ->columnSpanFull(),
+                            ->afterStateUpdated(function ($state, Set $set) {
+                                // Bersihkan kecamatan jika skala bukan Kecamatan
+                                if ($state !== 'Kecamatan') {
+                                    $set('kecamatan_id', null);
+                                }
+                            }),
 
+                        Forms\Components\Select::make('bidang_id')
+                            ->label('Bidang / Kategori')
+                            ->options(MasterBidang::pluck('nama_bidang', 'id'))
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->placeholder('Pilih Kategori'),
+
+                        // Row 3 (kondisional): Muncul saat Skala = Kecamatan
                         Forms\Components\Select::make('kecamatan_id')
                             ->label('Kecamatan')
                             ->options(MasterKecamatan::pluck('nama_kecamatan', 'id'))
                             ->searchable()
                             ->preload()
-                            ->visible(fn (Get $get): bool => $get('skala_lkp') === 'Kecamatan')
+                            ->placeholder('Pilih Kecamatan')
                             ->required(fn (Get $get): bool => $get('skala_lkp') === 'Kecamatan')
-                            ->placeholder('Pilih Kecamatan'),
+                            ->visible(fn (Get $get): bool => $get('skala_lkp') === 'Kecamatan')
+                            ->columnSpanFull()
+                            ->extraAttributes([
+                                'x-transition:enter'       => 'transition ease-out duration-300',
+                                'x-transition:enter-start' => 'opacity-0 -translate-y-3 scale-98',
+                                'x-transition:enter-end'   => 'opacity-100 translate-y-0 scale-100',
+                                'x-transition:leave'       => 'transition ease-in duration-200',
+                                'x-transition:leave-start' => 'opacity-100 translate-y-0 scale-100',
+                                'x-transition:leave-end'   => 'opacity-0 -translate-y-3 scale-98',
+                            ]),
+                    ])
+                    ->columns(2),
 
-                        Forms\Components\Select::make('bidang_id')
-                            ->label('Bidang / Program Pokok')
-                            ->options(MasterBidang::pluck('nama_bidang', 'id'))
-                            ->searchable()
-                            ->preload()
-                            ->required()
-                            ->placeholder('Pilih Bidang'),
-                    ])->columns(2),
-
-                \Filament\Schemas\Components\Section::make('Isi Laporan & Dokumentasi')
-                    ->description('Tuliskan ringkasan dan unggah bukti kegiatan')
-                    ->icon('heroicon-o-pencil-square')
+                // ── Section 2: Detail Laporan ───────────────────────────────
+                \Filament\Schemas\Components\Section::make('Detail Laporan')
+                    ->description('Isi judul, konten, dan lampiran foto kegiatan.')
+                    ->icon('heroicon-o-document-text')
                     ->schema([
-                        Forms\Components\RichEditor::make('isi_laporan')
-                            ->label('Ringkasan / Detail Kegiatan')
+                        Forms\Components\TextInput::make('judul_laporan')
+                            ->label('Judul Laporan')
                             ->required()
-                            ->toolbarButtons([
-                                'bold', 'italic', 'underline', 'bulletList', 'orderedList', 'link', 'undo', 'redo'
-                            ])
-                            ->placeholder('Ceritakan detail kegiatan PKK yang telah dilaksanakan...')
+                            ->placeholder('Contoh: Kegiatan Posyandu Mawar Merah')
+                            ->maxLength(255)
+                            ->columnSpanFull(),
+
+                        Forms\Components\Textarea::make('isi_laporan')
+                            ->label('Isi Laporan')
+                            ->required()
+                            ->placeholder('Deskripsikan detail kegiatan, hasil, dan kendala yang dihadapi...')
+                            ->rows(6)
+                            ->autosize()
                             ->columnSpanFull(),
 
                         Forms\Components\FileUpload::make('dokumentasi_foto')
-                            ->label('Foto Dokumentasi')
+                            ->label('Lampiran Foto')
                             ->image()
                             ->multiple()
                             ->reorderable()
@@ -105,16 +150,19 @@ class LkpReportResource extends Resource
                             ->directory('lkp-photos')
                             ->disk('public')
                             ->maxFiles(5)
+                            ->maxSize(5120)
                             ->panelLayout('grid')
                             ->imageResizeMode('cover')
                             ->imageResizeTargetWidth('1080')
                             ->imageResizeTargetHeight('1080')
                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                            ->helperText('Unggah foto momen kegiatan (Maks 5 foto).')
+                            ->helperText('Seret & lepas foto, atau klik untuk memilih (Maks. 5 foto, 5MB/foto).')
                             ->columnSpanFull(),
-                    ])->columns(1),
+                    ])
+                    ->columns(1),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
@@ -134,6 +182,12 @@ class LkpReportResource extends Resource
                             ->badge()
                             ->color('primary')
                             ->weight(FontWeight::Bold),
+
+                        Tables\Columns\TextColumn::make('judul_laporan')
+                            ->weight(FontWeight::Bold)
+                            ->size('lg')
+                            ->searchable()
+                            ->sortable(),
 
                         Tables\Columns\TextColumn::make('created_at')
                             ->dateTime('l, d F Y')
@@ -293,6 +347,11 @@ class LkpReportResource extends Resource
                 \Filament\Schemas\Components\Section::make('Detail Laporan')
                     ->icon('heroicon-o-document-text')
                     ->components([
+                        \Filament\Infolists\Components\TextEntry::make('judul_laporan')
+                            ->weight(FontWeight::Bold)
+                            ->size('lg')
+                            ->hiddenLabel(),
+
                         \Filament\Infolists\Components\TextEntry::make('isi_laporan')
                             ->hiddenLabel()
                             ->html()

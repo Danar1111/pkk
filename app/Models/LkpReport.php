@@ -12,8 +12,10 @@ class LkpReport extends Model
         'skala_lkp',
         'kecamatan_id',
         'bidang_id',
+        'judul_laporan',
         'isi_laporan',
         'dokumentasi_foto',
+        'status',
     ];
 
     protected $casts = [

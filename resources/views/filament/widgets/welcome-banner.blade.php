@@ -1,6 +1,18 @@
 <x-filament-widgets::widget>
+    @php
+        // Daftar gambar banner – dipilih acak tiap render (navigasi/refresh)
+        $bannerImages = [
+            asset('images/banner-1.png'), // PKK gathering
+            asset('images/banner-2.png'), // Posyandu
+            asset('images/banner-3.png'), // UMKM
+            asset('images/banner-4.png'), // Gotong Royong
+            asset('images/banner-5.png'), // Pendidikan
+        ];
+        $randomImage = $bannerImages[array_rand($bannerImages)];
+    @endphp
+
     <div style="
-        background: linear-gradient(135deg, #1E88E5 0%, #0D47A1 100%);
+        background: linear-gradient(135deg, #DCE7F3 0%, #FFF3C4 60%, #FDD835 100%);
         border-radius: 1rem;
         padding: 2rem 2.5rem;
         position: relative;
@@ -9,18 +21,32 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04);
+        margin-top: -0.5rem;
     ">
-        {{-- Decorative circles --}}
-        <div style="position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; background: rgba(255,214,0,0.15); border-radius: 50%;"></div>
-        <div style="position: absolute; bottom: -60px; right: 80px; width: 180px; height: 180px; background: rgba(255,255,255,0.08); border-radius: 50%;"></div>
-        <div style="position: absolute; top: 20px; right: 20px; width: 120px; height: 120px; background: rgba(79,195,247,0.12); border-radius: 50%;"></div>
+        {{-- Gambar sisi kanan – berubah setiap refresh/navigasi --}}
+        <div style="
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 38%;
+            background-image: url('{{ $randomImage }}');
+            background-size: cover;
+            background-position: center;
+            border-top-left-radius: 100px;
+            border-bottom-left-radius: 100px;
+            z-index: 1;
+            border-left: 2px solid rgba(255, 255, 255, 0.5);
+        "></div>
 
-        <div style="position: relative; z-index: 10;">
+        <div style="position: relative; z-index: 10; max-width: 60%;">
             <p style="
-                font-size: 0.7rem;
+                font-size: 0.75rem;
                 font-weight: 700;
-                color: rgba(255,255,255,0.7);
-                letter-spacing: 0.1em;
+                color: #4A5D78;
+                letter-spacing: 0.05em;
                 text-transform: uppercase;
                 margin-bottom: 0.5rem;
                 font-family: 'Plus Jakarta Sans', sans-serif;
@@ -29,18 +55,19 @@
             <h2 style="
                 font-size: 1.75rem;
                 font-weight: 800;
-                color: #ffffff;
+                color: #0F172A;
                 margin-bottom: 0.5rem;
-                letter-spacing: -0.02em;
+                letter-spacing: -0.025em;
                 font-family: 'Plus Jakarta Sans', sans-serif;
+                line-height: 1.2;
             ">Selamat Datang, {{ auth()->user()?->name ?? 'Ibu Admin' }}</h2>
 
             <p style="
-                font-size: 0.9rem;
-                color: rgba(255,255,255,0.8);
-                max-width: 500px;
+                font-size: 0.875rem;
+                color: #334155;
                 line-height: 1.5;
                 font-family: 'Plus Jakarta Sans', sans-serif;
+                margin: 0;
             ">Berikut adalah ringkasan aktivitas dan laporan terkini dari seluruh komunitas PKK. Semangat bergotong royong!</p>
         </div>
     </div>

@@ -5,14 +5,17 @@ namespace App\Filament\Widgets;
 use App\Models\LkpReport;
 use App\Models\MasterBidang;
 use App\Models\MasterKecamatan;
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
+use Filament\Widgets\Widget;
 
-class StatsOverviewWidget extends BaseWidget
+class StatsOverviewWidget extends Widget
 {
     protected static ?int $sort = 2;
 
-    protected function getStats(): array
+    protected int | string | array $columnSpan = 'full';
+
+    protected string $view = 'filament.widgets.stats-overview';
+
+    protected function getViewData(): array
     {
         $totalReports = LkpReport::count();
         $monthlyReports = LkpReport::whereMonth('created_at', now()->month)
@@ -22,22 +25,10 @@ class StatsOverviewWidget extends BaseWidget
         $totalBidang = MasterBidang::count();
 
         return [
-            Stat::make('Total Laporan', number_format($totalReports))
-                ->description('Seluruh laporan')
-                ->descriptionIcon('heroicon-m-document-text')
-                ->color('primary'),
-            Stat::make('Laporan Bulan Ini', number_format($monthlyReports))
-                ->description('Bulan ' . now()->translatedFormat('F'))
-                ->descriptionIcon('heroicon-m-calendar')
-                ->color('success'),
-            Stat::make('Total Kecamatan', number_format($totalKecamatan))
-                ->description('Kecamatan terdaftar')
-                ->descriptionIcon('heroicon-m-map-pin')
-                ->color('info'),
-            Stat::make('Total Bidang', number_format($totalBidang))
-                ->description('Bidang aktif')
-                ->descriptionIcon('heroicon-m-squares-2x2')
-                ->color('warning'),
+            'totalReports' => number_format($totalReports),
+            'monthlyReports' => number_format($monthlyReports),
+            'totalKecamatan' => number_format($totalKecamatan),
+            'totalBidang' => number_format($totalBidang),
         ];
     }
 }

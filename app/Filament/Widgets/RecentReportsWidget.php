@@ -13,14 +13,27 @@ class RecentReportsWidget extends BaseWidget
 
     protected int | string | array $columnSpan = 'full';
 
-    protected static ?string $heading = 'Laporan Terbaru';
-
     public function table(Table $table): Table
     {
         return $table
             ->query(
                 LkpReport::query()->latest()->limit(5)
             )
+            ->heading('Laporan Terbaru')
+            ->description('5 laporan terakhir yang masuk ke sistem.')
+            ->headerActions([
+                \Filament\Actions\Action::make('create')
+                    ->label('Buat Laporan Baru')
+                    ->url(\App\Filament\Resources\LkpReportResource::getUrl('create'))
+                    ->icon('heroicon-o-plus')
+                    ->button(),
+                \Filament\Actions\Action::make('view_all')
+                    ->label('Lihat Semua')
+                    ->url(\App\Filament\Resources\LkpReportResource::getUrl('index'))
+                    ->icon('heroicon-o-arrow-right')
+                    ->color('gray')
+                    ->outlined(),
+            ])
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal')
@@ -29,29 +42,29 @@ class RecentReportsWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Pelapor')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('bidang.nama')
+                Tables\Columns\TextColumn::make('bidang.nama_bidang')
                     ->label('Bidang')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('kecamatan.nama')
-                    ->label('Kecamatan')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('skala_lkp')
+                    ->label('Skala / Wilayah')
+                    ->formatStateUsing(function ($record) {
+                        if ($record->skala_lkp === 'Kecamatan' && $record->kecamatan) {
+                            return 'Kec. ' . $record->kecamatan->nama_kecamatan;
+                        }
+                        return 'Kabupaten';
+                    })
+                    ->badge()
+                    ->color(fn ($state) => ($state === 'Kecamatan' || str_starts_with($state ?? '', 'Kec')) ? 'info' : 'success'),
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn ($state) => match ($state) {
                         'selesai' => 'success',
                         'proses' => 'warning',
                         'baru' => 'info',
                         default => 'gray',
-                    }),
-            ])
-            ->headerActions([
-                \Filament\Actions\Action::make('create')
-                    ->label('Buat Laporan Baru')
-                    ->icon('heroicon-m-plus')
-                    ->url(fn (): string => \App\Filament\Resources\LkpReportResource::getUrl('create'))
-                    ->color('primary')
-                    ->button(),
+                    })
+                    ->formatStateUsing(fn ($state) => ucfirst($state ?? '')),
             ])
             ->paginated(false);
     }

@@ -26,6 +26,11 @@ class MasterBidangResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole(['super_admin', 'Admin_Sistem']) ?? false;
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
