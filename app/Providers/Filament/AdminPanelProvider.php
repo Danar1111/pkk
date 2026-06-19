@@ -372,6 +372,37 @@ class AdminPanelProvider extends PanelProvider
                     .fi-simple-layout footer {
                         display: none !important;
                     }
+
+                    /* Floating Back to Home button */
+                    .back-to-home {
+                        position: fixed !important;
+                        top: 1.5rem !important;
+                        left: 1.5rem !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        gap: 0.5rem !important;
+                        color: rgba(255, 255, 255, 0.8) !important;
+                        text-decoration: none !important;
+                        font-weight: 700 !important;
+                        font-size: 0.8rem !important;
+                        background: rgba(255, 255, 255, 0.15) !important;
+                        backdrop-filter: blur(10px) !important;
+                        -webkit-backdrop-filter: blur(10px) !important;
+                        padding: 0.5rem 1rem !important;
+                        border-radius: 9999px !important;
+                        border: 1px solid rgba(255, 255, 255, 0.25) !important;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+                        transition: all 0.2s ease !important;
+                        z-index: 1000 !important;
+                    }
+                    .back-to-home:hover {
+                        color: #ffffff !important;
+                        background: rgba(255, 255, 255, 0.25) !important;
+                        transform: translateX(-4px) !important;
+                    }
+                    .back-to-home svg {
+                        color: inherit !important;
+                    }
                 </style>
                 ')
                     : ''
@@ -1250,7 +1281,14 @@ class AdminPanelProvider extends PanelProvider
                         }
                     </script>
                     '
-                    : ''
+                    : '
+                    <a href="/" class="back-to-home">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 1.15rem; height: 1.15rem; display: inline-block; vertical-align: middle;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                        </svg>
+                        <span style="display: inline-block; vertical-align: middle; margin-left: 0.125rem;">Kembali ke Halaman Awal</span>
+                    </a>
+                    '
             )
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\Filament\Clusters')

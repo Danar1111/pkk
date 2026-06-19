@@ -59,9 +59,9 @@ class LkpReportResource extends Resource
                             ->default('baru'),
 
                         // Row 1: Tanggal Laporan | Nama Pelapor
-                        Forms\Components\DatePicker::make('created_at')
+                        Forms\Components\DatePicker::make('tanggal_laporan')
                             ->label('Tanggal Laporan')
-                            ->default(now())
+                            ->default(fn () => request()->query('tanggal_laporan') ? \Illuminate\Support\Carbon::parse(request()->query('tanggal_laporan')) : now())
                             ->required()
                             ->native(false)
                             ->displayFormat('d/m/Y')
@@ -102,7 +102,8 @@ class LkpReportResource extends Resource
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->placeholder('Pilih Kategori'),
+                            ->placeholder('Pilih Kategori')
+                            ->default(fn () => request()->query('bidang_id')),
 
                         // Row 3 (kondisional): Muncul saat Skala = Kecamatan
                         Forms\Components\Select::make('kecamatan_id')
@@ -196,8 +197,8 @@ class LkpReportResource extends Resource
                             ->searchable()
                             ->sortable(),
 
-                        Tables\Columns\TextColumn::make('created_at')
-                            ->dateTime('l, d F Y')
+                        Tables\Columns\TextColumn::make('tanggal_laporan')
+                            ->date('l, d F Y')
                             ->color('gray')
                             ->size('sm'),
 
@@ -241,11 +242,11 @@ class LkpReportResource extends Resource
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('tanggal_laporan', '>=', $date),
                             )
                             ->when(
                                 $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                                fn (Builder $query, $date): Builder => $query->whereDate('tanggal_laporan', '<=', $date),
                             );
                     })
                     ->indicateUsing(function (array $data): array {
@@ -315,6 +316,23 @@ class LkpReportResource extends Resource
                     }),
             ])
             ->actions([
+                \Filament\Actions\Action::make('exportPdfSingle')
+                    ->label('PDF')
+                    ->tooltip('Unduh PDF Laporan Ini')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('danger')
+                    ->action(function (LkpReport $record) {
+                        $pdf = Pdf::loadView('pdf.lkp-report', [
+                            'records' => collect([$record]),
+                            'title' => 'Laporan Kegiatan PKK',
+                            'date' => now()->translatedFormat('d F Y'),
+                        ]);
+
+                        return response()->streamDownload(
+                            fn () => print($pdf->output()),
+                            'Laporan-' . str($record->judul_laporan)->slug() . '-' . now()->format('Y-m-d') . '.pdf'
+                        );
+                    }),
                 \Filament\Actions\ViewAction::make(),
                 \Filament\Actions\EditAction::make(),
                 \Filament\Actions\DeleteAction::make(),
@@ -324,9 +342,8 @@ class LkpReportResource extends Resource
                     ->exports([
                         ExcelExport::make('laporan_lkp')
                             ->withFilename(fn () => 'Laporan-LKP-' . now()->format('Y-m-d'))
-                            ->fromTable()
                             ->withColumns([
-                                Column::make('created_at')->heading('Tanggal'),
+                                Column::make('tanggal_laporan')->heading('Tanggal'),
                                 Column::make('user.name')->heading('Penulis'),
                                 Column::make('bidang.nama_bidang')->heading('Bidang'),
                                 Column::make('skala_lkp')->heading('Skala'),
@@ -342,16 +359,16 @@ class LkpReportResource extends Resource
                     ->label('Export PDF')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('danger')
-                    ->action(function () {
-                        $records = static::getEloquentQuery()
+                    ->action(function (Tables\Table $table) {
+                        $records = $table->getLivewire()->getFilteredTableQuery()
                             ->with(['user', 'bidang', 'kecamatan'])
                             ->latest()
                             ->get();
 
                         $pdf = Pdf::loadView('pdf.lkp-report', [
                             'records' => $records,
-                            'title' => 'Laporan LKP PKK',
-                            'date' => now()->format('d F Y'),
+                            'title' => 'Laporan Kegiatan PKK',
+                            'date' => now()->translatedFormat('d F Y'),
                         ]);
 
                         return response()->streamDownload(
@@ -362,19 +379,47 @@ class LkpReportResource extends Resource
             ])
             ->bulkActions([
                 \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
                     ExportBulkAction::make()
+                        ->label('Export Excel (Terpilih)')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('success')
                         ->exports([
-                            ExcelExport::make()
+                            ExcelExport::make('laporan_lkp_selected')
                                 ->withFilename(fn () => 'Laporan-LKP-Selected-' . now()->format('Y-m-d'))
-                                ->fromTable()
+                                ->withColumns([
+                                    Column::make('tanggal_laporan')->heading('Tanggal'),
+                                    Column::make('user.name')->heading('Penulis'),
+                                    Column::make('bidang.nama_bidang')->heading('Bidang'),
+                                    Column::make('skala_lkp')->heading('Skala'),
+                                    Column::make('kecamatan.nama_kecamatan')->heading('Kecamatan'),
+                                    Column::make('isi_laporan')->heading('Isi Laporan'),
+                                 ]),
                         ]),
+                    \Filament\Actions\BulkAction::make('exportPdfBulk')
+                        ->label('Export PDF (Terpilih)')
+                        ->icon('heroicon-o-document-arrow-down')
+                        ->color('primary')
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records) {
+                            $records->load(['user', 'bidang', 'kecamatan']);
+                            
+                            $pdf = Pdf::loadView('pdf.lkp-report', [
+                                'records' => $records,
+                                'title' => 'Laporan Kegiatan PKK',
+                                'date' => now()->translatedFormat('d F Y'),
+                            ]);
+
+                            return response()->streamDownload(
+                                fn () => print($pdf->output()),
+                                'Laporan-LKP-Terpilih-' . now()->format('Y-m-d') . '.pdf'
+                            );
+                        }),
+                    \Filament\Actions\DeleteBulkAction::make(),
                 ]),
             ])
             ->contentGrid([
                 'md' => 2,
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('tanggal_laporan', 'desc');
     }
 
     public static function infolist(Schema $schema): Schema
@@ -397,12 +442,13 @@ class LkpReportResource extends Resource
                                             ->label('Program Pokok / Bidang')
                                             ->badge()
                                             ->color('primary'),
-                                        \Filament\Infolists\Components\TextEntry::make('created_at')
+                                        \Filament\Infolists\Components\TextEntry::make('tanggal_laporan')
                                             ->label('Tanggal Pelaksanaan')
-                                            ->dateTime('l, d F Y')
+                                            ->date('l, d F Y')
                                             ->icon('heroicon-o-calendar'),
-                                        \Filament\Infolists\Components\TextEntry::make('user.name')
-                                            ->label('Dilaporkan Oleh')
+                                        \Filament\Infolists\Components\TextEntry::make('nama_pelapor')
+                                            ->label('Nama Pelapor')
+                                            ->getStateUsing(fn ($record) => $record->nama_pelapor ?: $record->user?->name)
                                             ->icon('heroicon-o-user'),
                                         \Filament\Infolists\Components\TextEntry::make('skala_lkp')
                                             ->label('Skala / Tingkat')
@@ -451,23 +497,7 @@ class LkpReportResource extends Resource
      */
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
-        $user = auth()->user();
-
-        if (! $user->hasRole(['Pengurus_Inti', 'Admin_Sistem', 'super_admin', 'Staf_Ahli'])) {
-            $roleIds = $user->roles->pluck('id')->toArray();
-
-            $query->where(function ($q) use ($user, $roleIds) {
-                $q->where('user_id', $user->id)
-                  ->orWhereHas('user', function ($q2) use ($roleIds) {
-                      $q2->whereHas('roles', function ($q3) use ($roleIds) {
-                          $q3->whereIn('id', $roleIds);
-                      });
-                  });
-            });
-        }
-
-        return $query;
+        return parent::getEloquentQuery();
     }
 
     public static function getRelations(): array

@@ -29,42 +29,71 @@ class LkpReportPolicy
 
     public function update(AuthUser $authUser, LkpReport $lkpReport): bool
     {
-        return $authUser->can('Update:LkpReport');
+        if (! $authUser->can('Update:LkpReport')) {
+            return false;
+        }
+
+        if ($authUser->hasRole(['super_admin', 'Admin_Sistem', 'Pengurus_Inti', 'Staf_Ahli'])) {
+            return true;
+        }
+
+        return $lkpReport->user_id === $authUser->id;
     }
 
     public function delete(AuthUser $authUser, LkpReport $lkpReport): bool
     {
-        return $authUser->can('Delete:LkpReport');
+        if (! $authUser->can('Delete:LkpReport')) {
+            return false;
+        }
+
+        if ($authUser->hasRole(['super_admin', 'Admin_Sistem', 'Pengurus_Inti', 'Staf_Ahli'])) {
+            return true;
+        }
+
+        return $lkpReport->user_id === $authUser->id;
     }
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return $authUser->can('DeleteAny:LkpReport');
+        return $authUser->hasRole(['super_admin', 'Admin_Sistem', 'Pengurus_Inti', 'Staf_Ahli']) 
+            && $authUser->can('DeleteAny:LkpReport');
     }
 
     public function restore(AuthUser $authUser, LkpReport $lkpReport): bool
     {
-        return $authUser->can('Restore:LkpReport');
+        return $authUser->hasRole(['super_admin', 'Admin_Sistem', 'Pengurus_Inti', 'Staf_Ahli']) 
+            && $authUser->can('Restore:LkpReport');
     }
 
     public function forceDelete(AuthUser $authUser, LkpReport $lkpReport): bool
     {
-        return $authUser->can('ForceDelete:LkpReport');
+        return $authUser->hasRole(['super_admin', 'Admin_Sistem', 'Pengurus_Inti', 'Staf_Ahli']) 
+            && $authUser->can('ForceDelete:LkpReport');
     }
 
     public function forceDeleteAny(AuthUser $authUser): bool
     {
-        return $authUser->can('ForceDeleteAny:LkpReport');
+        return $authUser->hasRole(['super_admin', 'Admin_Sistem', 'Pengurus_Inti', 'Staf_Ahli']) 
+            && $authUser->can('ForceDeleteAny:LkpReport');
     }
 
     public function restoreAny(AuthUser $authUser): bool
     {
-        return $authUser->can('RestoreAny:LkpReport');
+        return $authUser->hasRole(['super_admin', 'Admin_Sistem', 'Pengurus_Inti', 'Staf_Ahli']) 
+            && $authUser->can('RestoreAny:LkpReport');
     }
 
     public function replicate(AuthUser $authUser, LkpReport $lkpReport): bool
     {
-        return $authUser->can('Replicate:LkpReport');
+        if (! $authUser->can('Replicate:LkpReport')) {
+            return false;
+        }
+
+        if ($authUser->hasRole(['super_admin', 'Admin_Sistem', 'Pengurus_Inti', 'Staf_Ahli'])) {
+            return true;
+        }
+
+        return $lkpReport->user_id === $authUser->id;
     }
 
     public function reorder(AuthUser $authUser): bool

@@ -18,6 +18,7 @@ class StatsOverviewWidget extends Widget
     public ?int $selectedMonth = null;
     public ?int $selectedYear = null;
     public bool $showFilterModal = false;
+    public bool $showDetailsModal = false;
     public ?int $tempMonth = null;
     public ?int $tempYear = null;
 
@@ -31,6 +32,16 @@ class StatsOverviewWidget extends Widget
     public function closeFilter(): void
     {
         $this->showFilterModal = false;
+    }
+
+    public function openDetails(): void
+    {
+        $this->showDetailsModal = true;
+    }
+
+    public function closeDetails(): void
+    {
+        $this->showDetailsModal = false;
     }
 
     public function applyFilter(): void
@@ -71,49 +82,52 @@ class StatsOverviewWidget extends Widget
 
     protected function getViewData(): array
     {
-        $user = auth()->user();
         $query = LkpReport::query();
-
-        if (! $user->hasRole(['Pengurus_Inti', 'Admin_Sistem', 'super_admin', 'Staf_Ahli'])) {
-            $roleIds = $user->roles->pluck('id')->toArray();
-
-            $query->where(function ($q) use ($user, $roleIds) {
-                $q->where('user_id', $user->id)
-                  ->orWhereHas('user', function ($q2) use ($roleIds) {
-                      $q2->whereHas('roles', function ($q3) use ($roleIds) {
-                          $q3->whereIn('id', $roleIds);
-                      });
-                  });
-            });
-        }
 
         $totalReports = (clone $query)->count();
 
         // Scoped for Monthly Report Card
-        $monthlyQuery = clone $query;
         $activeMonth = $this->selectedMonth ?? now()->month;
         $activeYear = $this->selectedYear ?? now()->year;
 
-        $monthlyReports = $monthlyQuery
-            ->whereMonth('created_at', $activeMonth)
-            ->whereYear('created_at', $activeYear)
+        $monthlyReports = (clone $query)
+            ->whereMonth('tanggal_laporan', $activeMonth)
+            ->whereYear('tanggal_laporan', $activeYear)
             ->count();
         
         $totalKecamatan = MasterKecamatan::count();
-        $totalBidang = MasterBidang::count();
+
+        // Load all Bidang and check if they have reported in the active month/year
+        $bidangList = MasterBidang::with(['lkpReports' => function ($q) use ($activeMonth, $activeYear) {
+            $q->whereMonth('tanggal_laporan', $activeMonth)
+              ->whereYear('tanggal_laporan', $activeYear);
+        }])->get();
+
+        $reportedBidangCount = $bidangList->filter(fn ($b) => $b->lkpReports->isNotEmpty())->count();
+        $totalBidangCount = $bidangList->count();
 
         $months = $this->getMonths();
         $monthlyLabel = $this->selectedMonth 
             ? "Laporan Bulan " . $months[$this->selectedMonth] . " " . $this->selectedYear
             : "Laporan Bulan Ini";
 
+        $bidangLabel = $this->selectedMonth
+            ? "Bidang Terlapor (" . $months[$this->selectedMonth] . " " . $this->selectedYear . ")"
+            : "Bidang Terlapor Bulan Ini";
+
         return [
             'totalReports' => number_format($totalReports),
             'monthlyReports' => number_format($monthlyReports),
             'totalKecamatan' => number_format($totalKecamatan),
-            'totalBidang' => number_format($totalBidang),
+            'reportedBidangCount' => $reportedBidangCount,
+            'totalBidangCount' => $totalBidangCount,
+            'bidangLabel' => $bidangLabel,
+            'bidangList' => $bidangList,
+            'activeMonthLabel' => $this->selectedMonth ? $months[$this->selectedMonth] . " " . $this->selectedYear : $months[now()->month] . " " . now()->year,
             'monthlyLabel' => $monthlyLabel,
             'isFiltered' => !is_null($this->selectedMonth),
+            'activeMonth' => $activeMonth,
+            'activeYear' => $activeYear,
         ];
     }
 }

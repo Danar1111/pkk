@@ -37,30 +37,16 @@ class RecentReportsWidget extends BaseWidget
 
     public function table(Table $table): Table
     {
-        $user = auth()->user();
         $query = LkpReport::query();
 
-        if (! $user->hasRole(['Pengurus_Inti', 'Admin_Sistem', 'super_admin', 'Staf_Ahli'])) {
-            $roleIds = $user->roles->pluck('id')->toArray();
-
-            $query->where(function ($q) use ($user, $roleIds) {
-                $q->where('user_id', $user->id)
-                  ->orWhereHas('user', function ($q2) use ($roleIds) {
-                      $q2->whereHas('roles', function ($q3) use ($roleIds) {
-                          $q3->whereIn('id', $roleIds);
-                      });
-                  });
-            });
-        }
-
         if ($this->filterMonth && $this->filterYear) {
-            $query->whereMonth('created_at', $this->filterMonth)
-                  ->whereYear('created_at', $this->filterYear);
+            $query->whereMonth('tanggal_laporan', $this->filterMonth)
+                  ->whereYear('tanggal_laporan', $this->filterYear);
         }
 
         return $table
             ->query(
-                $query->latest()->limit(5)
+                $query->orderBy('tanggal_laporan', 'desc')->latest()->limit(5)
             )
             ->heading('Laporan Terbaru')
             ->description('5 laporan terakhir yang masuk ke sistem.')
@@ -78,9 +64,9 @@ class RecentReportsWidget extends BaseWidget
                     ->outlined(),
             ])
             ->columns([
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('tanggal_laporan')
                     ->label('Tanggal')
-                    ->dateTime('d M Y')
+                    ->date('d M Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('judul_laporan')
                     ->label('Judul Laporan')

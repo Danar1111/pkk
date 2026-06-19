@@ -9,6 +9,7 @@ class LkpReport extends Model
 {
     protected $fillable = [
         'user_id',
+        'tanggal_laporan',
         'nama_pelapor',
         'skala_lkp',
         'kecamatan_id',
@@ -21,6 +22,7 @@ class LkpReport extends Model
 
     protected $casts = [
         'dokumentasi_foto' => 'array',
+        'tanggal_laporan' => 'date',
     ];
 
     public function user(): BelongsTo
