@@ -30,7 +30,7 @@ class LkpReportResource extends Resource
 {
     protected static ?string $model = LkpReport::class;
 
-    protected static ?string $recordTitleAttribute = 'isi_laporan';
+    protected static ?string $recordTitleAttribute = 'judul_laporan';
 
     protected static \BackedEnum|string|null $navigationIcon = 'heroicon-o-document-text';
 
@@ -69,11 +69,14 @@ class LkpReportResource extends Resource
 
                         Forms\Components\TextInput::make('nama_pelapor')
                             ->label('Nama Pelapor')
-                            ->default(fn () => auth()->user()?->name)
-                            ->readOnly()
                             ->required()
-                            ->dehydrated(false)
-                            ->placeholder('Masukkan nama lengkap'),
+                            ->placeholder('Masukkan nama lengkap')
+                            ->suffixAction(
+                                \Filament\Actions\Action::make('autofill')
+                                    ->icon('heroicon-m-user')
+                                    ->tooltip('Isi dengan nama saya')
+                                    ->action(fn (Set $set) => $set('nama_pelapor', auth()->user()?->name))
+                            ),
 
                         // Row 2: Skala Laporan | Bidang / Kategori
                         Forms\Components\Select::make('skala_lkp')
@@ -84,6 +87,7 @@ class LkpReportResource extends Resource
                             ])
                             ->required()
                             ->placeholder('Pilih Skala')
+                            ->native(false)
                             ->live()
                             ->afterStateUpdated(function ($state, Set $set) {
                                 // Bersihkan kecamatan jika skala bukan Kecamatan
@@ -133,12 +137,11 @@ class LkpReportResource extends Resource
                             ->maxLength(255)
                             ->columnSpanFull(),
 
-                        Forms\Components\Textarea::make('isi_laporan')
+                        Forms\Components\RichEditor::make('isi_laporan')
                             ->label('Isi Laporan')
                             ->required()
                             ->placeholder('Deskripsikan detail kegiatan, hasil, dan kendala yang dihadapi...')
-                            ->rows(6)
-                            ->autosize()
+                            ->extraInputAttributes(['style' => 'min-height: 100px;'])
                             ->columnSpanFull(),
 
                         Forms\Components\FileUpload::make('dokumentasi_foto')
@@ -168,16 +171,20 @@ class LkpReportResource extends Resource
     {
         return $table
             ->columns([
-                Stack::make([
+                Tables\Columns\Layout\Split::make([
                     Tables\Columns\ImageColumn::make('dokumentasi_foto')
-                        ->height('200px')
-                        ->width('100%')
+                        ->disk('public')
+                        ->height('150px')
+                        ->width('150px')
                         ->extraImgAttributes([
-                            'class' => 'object-cover rounded-t-xl w-full h-full',
+                            'class' => 'object-cover rounded-xl shadow-sm',
+                            'style' => 'width: 150px; height: 150px; min-width: 150px; max-width: 150px;'
                         ])
-                        ->limit(1),
+                        ->defaultImageUrl(asset('images/placeholder.png'))
+                        ->limit(1)
+                        ->grow(false),
 
-                    Stack::make([
+                    Tables\Columns\Layout\Stack::make([
                         Tables\Columns\TextColumn::make('bidang.nama_bidang')
                             ->badge()
                             ->color('primary')
@@ -194,7 +201,16 @@ class LkpReportResource extends Resource
                             ->color('gray')
                             ->size('sm'),
 
-                        Tables\Columns\TextColumn::make('user.name')
+                        Tables\Columns\TextColumn::make('isi_laporan')
+                            ->getStateUsing(fn ($record) => strip_tags($record->isi_laporan))
+                            ->limit(120)
+                            ->color('gray')
+                            ->size('sm')
+                            ->wrap(),
+
+                        Tables\Columns\TextColumn::make('nama_pelapor')
+                            ->label('Nama Pelapor')
+                            ->getStateUsing(fn ($record) => $record->nama_pelapor ?: $record->user?->name)
                             ->icon('heroicon-m-user-circle')
                             ->color('gray')
                             ->size('sm'),
@@ -204,18 +220,22 @@ class LkpReportResource extends Resource
                             ->color('info')
                             ->size('sm')
                             ->icon('heroicon-m-map-pin'),
-                    ])->space(2)->extraAttributes(['class' => 'p-4']),
-                ])
+                    ])->space(2),
+                ])->extraAttributes(['class' => 'gap-6 items-start'])
             ])
             ->filters([
                 Tables\Filters\Filter::make('tanggal')
                     ->form([
                         Forms\Components\DatePicker::make('created_from')
                             ->label('Dari Tanggal')
-                            ->placeholder('Pilih tanggal awal'),
+                            ->placeholder('Pilih tanggal awal')
+                            ->native(false)
+                            ->displayFormat('d M Y'),
                         Forms\Components\DatePicker::make('created_until')
                             ->label('Sampai Tanggal')
-                            ->placeholder('Pilih tanggal akhir'),
+                            ->placeholder('Pilih tanggal akhir')
+                            ->native(false)
+                            ->displayFormat('d M Y'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -247,12 +267,52 @@ class LkpReportResource extends Resource
                     ->searchable()
                     ->preload(),
 
-                Tables\Filters\SelectFilter::make('skala_lkp')
-                    ->label('Skala')
-                    ->options([
-                        'Kabupaten' => 'Kabupaten',
-                        'Kecamatan' => 'Kecamatan',
-                    ]),
+                Tables\Filters\Filter::make('skala_wilayah')
+                    ->form([
+                        Forms\Components\Select::make('skala_lkp')
+                            ->label('Skala')
+                            ->options([
+                                'Kabupaten' => 'Kabupaten',
+                                'Kecamatan' => 'Kecamatan',
+                            ])
+                            ->native(false)
+                            ->live(),
+
+                        Forms\Components\Select::make('kecamatan_id')
+                            ->label('Pilih Kecamatan')
+                            ->options(MasterKecamatan::pluck('nama_kecamatan', 'id'))
+                            ->searchable()
+                            ->preload()
+                            ->native(false)
+                            ->visible(fn (Get $get) => $get('skala_lkp') === 'Kecamatan'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['skala_lkp'],
+                                fn (Builder $query, $skala) => $query->where('skala_lkp', $skala),
+                            )
+                            ->when(
+                                $data['kecamatan_id'],
+                                fn (Builder $query, $kecamatanId) => $query->where('kecamatan_id', $kecamatanId),
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['skala_lkp'] ?? null) {
+                            if ($data['skala_lkp'] === 'Kecamatan') {
+                                if ($data['kecamatan_id'] ?? null) {
+                                    $kecamatanName = MasterKecamatan::find($data['kecamatan_id'])?->nama_kecamatan;
+                                    $indicators[] = "Skala: Kec. " . ($kecamatanName ?: '');
+                                } else {
+                                    $indicators[] = 'Skala: Kecamatan';
+                                }
+                            } else {
+                                $indicators[] = 'Skala: Kabupaten';
+                            }
+                        }
+                        return $indicators;
+                    }),
             ])
             ->actions([
                 \Filament\Actions\ViewAction::make(),
@@ -313,7 +373,6 @@ class LkpReportResource extends Resource
             ])
             ->contentGrid([
                 'md' => 2,
-                'xl' => 3,
             ])
             ->defaultSort('created_at', 'desc');
     }
@@ -322,55 +381,66 @@ class LkpReportResource extends Resource
     {
         return $schema
             ->components([
-                \Filament\Schemas\Components\Section::make('Informasi Kegiatan')
-                    ->icon('heroicon-o-information-circle')
+                \Filament\Schemas\Components\Grid::make(3)
+                    ->columnSpanFull()
                     ->components([
-                        \Filament\Schemas\Components\Grid::make(2)->components([
-                            \Filament\Infolists\Components\TextEntry::make('bidang.nama_bidang')
-                                ->label('Program Pokok / Bidang')
-                                ->badge()
-                                ->color('primary'),
-                            \Filament\Infolists\Components\TextEntry::make('created_at')
-                                ->label('Tanggal Pelaksanaan')
-                                ->dateTime('l, d F Y')
-                                ->icon('heroicon-o-calendar'),
-                            \Filament\Infolists\Components\TextEntry::make('user.name')
-                                ->label('Dilaporkan Oleh')
-                                ->icon('heroicon-o-user'),
-                            \Filament\Infolists\Components\TextEntry::make('skala_lkp')
-                                ->label('Skala / Tingkat')
-                                ->formatStateUsing(fn ($record) => $record->skala_lkp === 'Kecamatan' ? "Kec. {$record->kecamatan->nama_kecamatan}" : 'Kabupaten')
-                                ->icon('heroicon-o-map-pin'),
-                        ]),
-                    ]),
+                        // Kolom Kiri: Informasi dan Isi Laporan
+                    \Filament\Schemas\Components\Group::make()
+                        ->extraAttributes([
+                            'class' => 'lg:sticky lg:top-24 lg:self-start filament-sticky-col'
+                        ])
+                        ->components([
+                            \Filament\Schemas\Components\Section::make('Informasi Laporan')
+                                ->components([
+                                    \Filament\Schemas\Components\Grid::make(2)->components([
+                                        \Filament\Infolists\Components\TextEntry::make('bidang.nama_bidang')
+                                            ->label('Program Pokok / Bidang')
+                                            ->badge()
+                                            ->color('primary'),
+                                        \Filament\Infolists\Components\TextEntry::make('created_at')
+                                            ->label('Tanggal Pelaksanaan')
+                                            ->dateTime('l, d F Y')
+                                            ->icon('heroicon-o-calendar'),
+                                        \Filament\Infolists\Components\TextEntry::make('user.name')
+                                            ->label('Dilaporkan Oleh')
+                                            ->icon('heroicon-o-user'),
+                                        \Filament\Infolists\Components\TextEntry::make('skala_lkp')
+                                            ->label('Skala / Tingkat')
+                                            ->formatStateUsing(fn ($record) => $record->skala_lkp === 'Kecamatan' ? "Kec. {$record->kecamatan->nama_kecamatan}" : 'Kabupaten')
+                                            ->icon('heroicon-o-map-pin'),
+                                    ])->extraAttributes(['class' => 'pb-6 mb-6 border-b border-gray-200 dark:border-white/10']),
 
-                \Filament\Schemas\Components\Section::make('Detail Laporan')
-                    ->icon('heroicon-o-document-text')
-                    ->components([
-                        \Filament\Infolists\Components\TextEntry::make('judul_laporan')
-                            ->weight(FontWeight::Bold)
-                            ->size('lg')
-                            ->hiddenLabel(),
+                                    \Filament\Infolists\Components\TextEntry::make('judul_laporan')
+                                        ->label('Judul Laporan')
+                                        ->weight(FontWeight::Bold)
+                                        ->size('lg'),
 
-                        \Filament\Infolists\Components\TextEntry::make('isi_laporan')
-                            ->hiddenLabel()
-                            ->html()
-                            ->prose(),
-                    ]),
+                                    \Filament\Infolists\Components\TextEntry::make('isi_laporan')
+                                        ->label('Isi Laporan')
+                                        ->html()
+                                        ->prose(),
+                                ])
+                        ])->columnSpan(['sm' => 3, 'lg' => 2]),
 
-                \Filament\Schemas\Components\Section::make('Dokumentasi Kegiatan')
-                    ->icon('heroicon-o-camera')
-                    ->components([
-                        \Filament\Infolists\Components\ImageEntry::make('dokumentasi_foto')
-                            ->hiddenLabel()
-                            ->size('100%')
-                            ->extraImgAttributes([
-                                'class' => 'rounded-xl shadow-sm max-h-[400px] object-cover w-full',
+                    // Kolom Kanan: Dokumentasi Kegiatan
+                    \Filament\Schemas\Components\Group::make()->components([
+                        \Filament\Schemas\Components\Section::make('Dokumentasi Kegiatan')
+                            ->components([
+                                \Filament\Infolists\Components\ImageEntry::make('dokumentasi_foto')
+                                    ->disk('public')
+                                    ->hiddenLabel()
+                                    ->extraImgAttributes([
+                                        'class' => 'rounded-xl shadow-sm mb-4 transition duration-200 hover:scale-[1.02] cursor-pointer ring-1 ring-gray-200 dark:ring-gray-700',
+                                        'style' => 'width: 100%; height: auto; object-fit: contain;',
+                                        'title' => 'Klik untuk memperbesar / mengunduh gambar',
+                                    ])
+                                    ->url(fn ($state) => \Illuminate\Support\Facades\Storage::disk('public')->url($state))
+                                    ->openUrlInNewTab()
+                                    ->limit(20), // Limit diperbanyak
                             ])
-                            ->stacked()
-                            ->limit(5),
-                    ])
+                    ])->columnSpan(['sm' => 3, 'lg' => 1])
                     ->visible(fn ($record) => !empty($record->dokumentasi_foto)),
+                ]),
             ]);
     }
 
@@ -382,9 +452,19 @@ class LkpReportResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();
+        $user = auth()->user();
 
-        if (! auth()->user()->hasRole(['Pengurus_Inti', 'Admin_Sistem', 'super_admin'])) {
-            $query->where('user_id', auth()->id());
+        if (! $user->hasRole(['Pengurus_Inti', 'Admin_Sistem', 'super_admin', 'Staf_Ahli'])) {
+            $roleIds = $user->roles->pluck('id')->toArray();
+
+            $query->where(function ($q) use ($user, $roleIds) {
+                $q->where('user_id', $user->id)
+                  ->orWhereHas('user', function ($q2) use ($roleIds) {
+                      $q2->whereHas('roles', function ($q3) use ($roleIds) {
+                          $q3->whereIn('id', $roleIds);
+                      });
+                  });
+            });
         }
 
         return $query;

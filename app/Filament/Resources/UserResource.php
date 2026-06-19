@@ -64,15 +64,16 @@ class UserResource extends Resource
                         Forms\Components\Select::make('roles')
                             ->label('Role / Peran')
                             ->relationship('roles', 'name')
-                            ->multiple()
                             ->preload()
-                            ->searchable(),
+                            ->searchable()
+                            ->required(fn ($get) => (bool) $get('is_active')),
 
                         Forms\Components\Toggle::make('is_active')
                             ->label('Status Aktif')
                             ->helperText('Nonaktifkan untuk mencegah pengguna login ke sistem.')
                             ->default(false)
-                            ->required(),
+                            ->required()
+                            ->live(),
                     ])->columns(2),
             ]);
     }
@@ -103,8 +104,20 @@ class UserResource extends Resource
                 Tables\Columns\ToggleColumn::make('is_active')
                     ->label('Aktif')
                     ->sortable()
-                    ->afterStateUpdated(function ($record, $state) {
-                        // Optional: Add notification
+                    ->updateStateUsing(function ($record, $state, $livewire) {
+                        if ($state && $record->roles->isEmpty()) {
+                            $livewire->mountTableAction('assignRoleAndActivate', $record->getKey());
+                            $livewire->dispatch('$refresh');
+                            return;
+                        }
+
+                        $record->update(['is_active' => $state]);
+                        
+                        \Filament\Notifications\Notification::make()
+                            ->title('Status Diperbarui')
+                            ->body('Status aktif pengguna berhasil diubah.')
+                            ->success()
+                            ->send();
                     }),
 
                 Tables\Columns\TextColumn::make('created_at')
@@ -123,6 +136,32 @@ class UserResource extends Resource
             ->actions([
                 \Filament\Actions\EditAction::make(),
                 \Filament\Actions\DeleteAction::make(),
+
+                \Filament\Actions\Action::make('assignRoleAndActivate')
+                    ->label('Pilih Peran')
+                    ->modalHeading('Peringatan: Pengguna Belum Memiliki Peran')
+                    ->modalDescription('Pengguna ini tidak dapat diaktifkan karena belum memiliki peran (roles). Silakan pilih peran terlebih dahulu untuk mengaktifkan akun.')
+                    ->modalIcon('heroicon-o-exclamation-triangle')
+                    ->modalIconColor('warning')
+                    ->form([
+                        Forms\Components\Select::make('roles')
+                            ->label('Pilih Peran / Role')
+                            ->relationship('roles', 'name')
+                            ->preload()
+                            ->searchable()
+                            ->required(),
+                    ])
+                    ->action(function ($record, array $data) {
+                        $record->roles()->sync($data['roles'] ? [$data['roles']] : []);
+                        $record->update(['is_active' => true]);
+
+                        \Filament\Notifications\Notification::make()
+                            ->title('Pengguna Berhasil Diaktifkan')
+                            ->body("Peran telah disimpan dan akun {$record->name} kini aktif.")
+                            ->success()
+                            ->send();
+                    })
+                    ->extraAttributes(['style' => 'display: none !important']),
             ])
             ->bulkActions([
                 \Filament\Actions\BulkActionGroup::make([

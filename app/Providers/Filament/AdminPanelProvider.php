@@ -151,7 +151,7 @@ class AdminPanelProvider extends PanelProvider
 
                     /* Container limits */
                     .fi-simple-main {
-                        max-width: 28rem !important;
+                        max-width: {{ request()->is("*/register") ? "40rem" : "24rem" }} !important;
                         width: 100% !important;
                         margin: 0 auto !important;
                         z-index: 20;
@@ -162,10 +162,10 @@ class AdminPanelProvider extends PanelProvider
                         background: rgba(255, 255, 255, 0.45) !important;
                         backdrop-filter: blur(30px) !important;
                         -webkit-backdrop-filter: blur(30px) !important;
-                        border-radius: 2rem !important;
-                        padding: 1.5rem !important; /* Responsive padding: mobile first */
+                        border-radius: 1.5rem !important;
+                        padding: 1rem 1.25rem !important; /* Responsive padding: mobile first */
                         height: auto !important; /* Force content-based height */
-                        max-height: 90vh !important; /* Never exceed screen height */
+                        max-height: 95vh !important; /* Never exceed screen height */
                         overflow-y: auto !important; /* Scroll internally if it overflows */
                         min-height: auto !important; /* Disable min-height utility stretch */
                         box-shadow: 
@@ -178,7 +178,7 @@ class AdminPanelProvider extends PanelProvider
                     }
                     @media (min-width: 640px) {
                         .fi-simple-page {
-                            padding: 2.25rem !important; /* Larger desktop padding */
+                            padding: 1.25rem 1.75rem !important; /* Larger desktop padding */
                         }
                     }
 
@@ -188,8 +188,8 @@ class AdminPanelProvider extends PanelProvider
                         justify-content: center !important;
                         align-items: center !important;
                         height: auto !important;
-                        min-height: 3.5rem !important;
-                        margin-bottom: 1rem !important; /* Reduced spacing */
+                        min-height: 2.5rem !important;
+                        margin-bottom: 0.125rem !important; /* Reduced spacing */
                         position: relative;
                         z-index: 20;
                     }
@@ -200,19 +200,19 @@ class AdminPanelProvider extends PanelProvider
                         flex-direction: column !important;
                         align-items: center !important;
                         text-align: center !important;
-                        margin-bottom: 1.5rem !important; /* Reduced spacing */
+                        margin-bottom: 0.875rem !important; /* Reduced spacing */
                     }
                     .fi-simple-header-heading {
-                        font-size: 1.625rem !important;
+                        font-size: 1.35rem !important;
                         font-weight: 800 !important;
                         letter-spacing: -0.025em !important;
                         color: #121A21 !important;
-                        margin-top: 0.25rem !important; /* Reduced margin */
-                        margin-bottom: 0.25rem !important; /* Reduced margin */
+                        margin-top: 0.125rem !important; /* Reduced margin */
+                        margin-bottom: 0.125rem !important; /* Reduced margin */
                         line-height: 1.25 !important;
                     }
                     .fi-simple-header-subheading {
-                        font-size: 0.9rem !important;
+                        font-size: 0.8rem !important;
                         font-weight: 500 !important;
                         color: #64748B !important;
                     }
@@ -221,16 +221,16 @@ class AdminPanelProvider extends PanelProvider
                     .fi-sc-form {
                         display: flex !important;
                         flex-direction: column !important;
-                        gap: 1.25rem !important;
+                        gap: 0.65rem !important;
                     }
                     .fi-fo-field {
-                        margin-bottom: 0.25rem !important;
+                        margin-bottom: 0 !important;
                     }
                     .fi-fo-field-label-col {
-                        margin-bottom: 0.375rem !important;
+                        margin-bottom: 0.25rem !important;
                     }
                     .fi-fo-field-label {
-                        font-size: 0.85rem !important;
+                        font-size: 0.75rem !important;
                         font-weight: 600 !important;
                         color: #0A2E5C !important;
                         letter-spacing: -0.01em !important;
@@ -244,7 +244,7 @@ class AdminPanelProvider extends PanelProvider
                     .fi-input-wrp {
                         background: rgba(255, 255, 255, 0.75) !important;
                         border: 1px solid rgba(0, 0, 0, 0.08) !important;
-                        border-radius: 0.875rem !important;
+                        border-radius: 0.6rem !important;
                         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.02) !important;
                         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
                         overflow: hidden !important;
@@ -265,8 +265,8 @@ class AdminPanelProvider extends PanelProvider
                         border: none !important;
                         outline: none !important;
                         box-shadow: none !important;
-                        padding: 0.75rem 0.875rem !important;
-                        font-size: 0.95rem !important;
+                        padding: 0.6rem 0.75rem !important;
+                        font-size: 0.85rem !important;
                         color: #121A21 !important;
                     }
 
@@ -305,7 +305,7 @@ class AdminPanelProvider extends PanelProvider
                         border-color: #1E88E5 !important;
                     }
                     .fi-fo-field-label-content {
-                        font-size: 0.875rem !important;
+                        font-size: 0.75rem !important;
                         font-weight: 500 !important;
                         color: #475569 !important;
                         user-select: none !important;
@@ -313,9 +313,10 @@ class AdminPanelProvider extends PanelProvider
 
                     /* Buttons */
                     .fi-btn {
-                        border-radius: 0.875rem !important;
+                        border-radius: 0.6rem !important;
                         font-weight: 700 !important;
-                        padding: 0.75rem 1.5rem !important;
+                        padding: 0.6rem 1.25rem !important;
+                        font-size: 0.85rem !important;
                         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
                         letter-spacing: 0.025em !important;
                     }
@@ -347,7 +348,7 @@ class AdminPanelProvider extends PanelProvider
                     .fi-link {
                         color: #1E88E5 !important;
                         font-weight: 600 !important;
-                        font-size: 0.9rem !important;
+                        font-size: 0.8rem !important;
                         transition: all 0.2s ease !important;
                         text-decoration: none !important;
                     }
@@ -852,7 +853,6 @@ class AdminPanelProvider extends PanelProvider
                         border-radius: 1rem !important;
                         box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04) !important;
                         border: 1px solid #E2E8F0 !important;
-                        overflow: hidden !important;
                         background: #ffffff !important;
                     }
 
@@ -933,7 +933,6 @@ class AdminPanelProvider extends PanelProvider
                         box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04) !important;
                         border: 1px solid #E2E8F0 !important;
                         background: #ffffff !important;
-                        overflow: hidden !important;
                     }
                     .fi-wi-widget .fi-ta-content {
                         border-radius: 0 !important;
@@ -1156,9 +1155,20 @@ class AdminPanelProvider extends PanelProvider
                     }
 
                     /* ---- Modal / Overlay ---- */
+                    .fi-modal {
+                        z-index: 60 !important;
+                    }
+                    .fi-modal-close-overlay {
+                        z-index: 60 !important;
+                    }
+                    .fi-modal-window-ctn {
+                        z-index: 70 !important;
+                    }
                     .fi-modal-window {
                         border-radius: 1.25rem !important;
                         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15) !important;
+                        z-index: 71 !important;
+                        margin-top: 2.5rem !important;
                     }
 
                     /* ---- Tabs ---- */
@@ -1170,9 +1180,11 @@ class AdminPanelProvider extends PanelProvider
                     }
 
                     /* ---- Notification ---- */
+                    .fi-no-notification-ctn,
                     .fi-no {
                         border-radius: 0.75rem !important;
                         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+                        z-index: 9999 !important;
                     }
 
                     /* ---- Footer Branding ---- */
@@ -1182,6 +1194,26 @@ class AdminPanelProvider extends PanelProvider
                         color: #94A3B8 !important;
                         font-size: 0.75rem !important;
                     }
+
+                    /* Force sticky layout for LKP Report Info column */
+                    .filament-sticky-col {
+                        position: -webkit-sticky !important; /* Safari support */
+                        position: sticky !important;
+                        top: 5rem !important; /* 80px offset from viewport top */
+                        align-self: start !important;
+                    }
+
+                    /* Enable sticky columns on Filament pages by making all ancestors overflow-visible */
+                    body:has(.filament-sticky-col) *:has(> .filament-sticky-col),
+                    body:has(.filament-sticky-col) *:has(> * > .filament-sticky-col),
+                    body:has(.filament-sticky-col) *:has(> * > * > .filament-sticky-col),
+                    body:has(.filament-sticky-col) *:has(> * > * > * > .filament-sticky-col),
+                    body:has(.filament-sticky-col) *:has(> * > * > * > * > .filament-sticky-col),
+                    body:has(.filament-sticky-col) *:has(> * > * > * > * > * > .filament-sticky-col),
+                    body:has(.filament-sticky-col) *:has(> * > * > * > * > * > * > .filament-sticky-col),
+                    body:has(.filament-sticky-col) *:has(> * > * > * > * > * > * > * > .filament-sticky-col) {
+                        overflow: visible !important;
+                    }
                 </style>
                 ')
                     : ''
@@ -1190,6 +1222,34 @@ class AdminPanelProvider extends PanelProvider
                 PanelsRenderHook::SIDEBAR_FOOTER,
                 fn (): string => !request()->is('*/login', '*/register')
                     ? view('filament.sidebar-footer')->render()
+                    : ''
+            )
+            ->renderHook(
+                PanelsRenderHook::BODY_END,
+                fn (): string => !request()->is('*/login', '*/register')
+                    ? '
+                    <script>
+                        if (!window.hasFilamentFilterAutoCloseListener) {
+                            window.hasFilamentFilterAutoCloseListener = true;
+                            document.addEventListener("click", (e) => {
+                                const target = e.target;
+                                const filterAction = target.closest(\'[wire\\\\:click="resetTableFiltersForm"]\') || 
+                                                     target.closest(\'[wire\\\\:click="applyTableFilters"]\') ||
+                                                     (target.closest(\'button[type="submit"]\') && target.closest(\'.fi-ta-filters\'));
+                                                     
+                                if (filterAction) {
+                                    const dropdown = target.closest(\'.fi-dropdown\');
+                                    if (dropdown && window.Alpine) {
+                                        const alpineData = window.Alpine.$data(dropdown);
+                                        if (alpineData && typeof alpineData.close === "function") {
+                                            alpineData.close();
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    </script>
+                    '
                     : ''
             )
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -1211,7 +1271,9 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->plugins([
-                FilamentShieldPlugin::make(),
+                FilamentShieldPlugin::make()
+                    ->navigationGroup(fn () => null)
+                    ->navigationSort(2),
             ])
             ->authMiddleware([
                 Authenticate::class,

@@ -58,7 +58,7 @@
                     <img src="{{ asset('images/logo.png') }}" alt="Logo PKK" class="h-10 w-10 object-contain drop-shadow-sm" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/4/4e/Lambang_PKK.png'">
                     <span class="font-extrabold text-2xl tracking-tight text-tertiary">LKP PKK</span>
                 </div>
-                <div class="hidden md:flex space-x-8 items-center">
+                <div class="hidden md:flex gap-6 items-center">
                     <a href="#" class="text-sm font-semibold text-neutral hover:text-primary transition-colors">Beranda</a>
                     <a href="#tentang" class="text-sm font-semibold text-neutral hover:text-primary transition-colors">Tentang Kami</a>
                     <a href="#program" class="text-sm font-semibold text-neutral hover:text-primary transition-colors">Program Kerja</a>

@@ -13,11 +13,54 @@ class RecentReportsWidget extends BaseWidget
 
     protected int | string | array $columnSpan = 'full';
 
+    public ?int $filterMonth = null;
+    public ?int $filterYear = null;
+
+    protected $listeners = [
+        'filterDashboardByMonth' => 'setFilter',
+        'resetDashboardFilter' => 'resetFilter',
+    ];
+
+    public function setFilter(int $month, int $year): void
+    {
+        $this->filterMonth = $month;
+        $this->filterYear = $year;
+        $this->resetTable();
+    }
+
+    public function resetFilter(): void
+    {
+        $this->filterMonth = null;
+        $this->filterYear = null;
+        $this->resetTable();
+    }
+
     public function table(Table $table): Table
     {
+        $user = auth()->user();
+        $query = LkpReport::query();
+
+        if (! $user->hasRole(['Pengurus_Inti', 'Admin_Sistem', 'super_admin', 'Staf_Ahli'])) {
+            $roleIds = $user->roles->pluck('id')->toArray();
+
+            $query->where(function ($q) use ($user, $roleIds) {
+                $q->where('user_id', $user->id)
+                  ->orWhereHas('user', function ($q2) use ($roleIds) {
+                      $q2->whereHas('roles', function ($q3) use ($roleIds) {
+                          $q3->whereIn('id', $roleIds);
+                      });
+                  });
+            });
+        }
+
+        if ($this->filterMonth && $this->filterYear) {
+            $query->whereMonth('created_at', $this->filterMonth)
+                  ->whereYear('created_at', $this->filterYear);
+        }
+
         return $table
             ->query(
-                LkpReport::query()->latest()->limit(5)
+                $query->latest()->limit(5)
             )
             ->heading('Laporan Terbaru')
             ->description('5 laporan terakhir yang masuk ke sistem.')
@@ -39,6 +82,10 @@ class RecentReportsWidget extends BaseWidget
                     ->label('Tanggal')
                     ->dateTime('d M Y')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('judul_laporan')
+                    ->label('Judul Laporan')
+                    ->searchable()
+                    ->wrap(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Pelapor')
                     ->searchable(),

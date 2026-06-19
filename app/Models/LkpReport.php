@@ -9,6 +9,7 @@ class LkpReport extends Model
 {
     protected $fillable = [
         'user_id',
+        'nama_pelapor',
         'skala_lkp',
         'kecamatan_id',
         'bidang_id',
@@ -35,5 +36,29 @@ class LkpReport extends Model
     public function bidang(): BelongsTo
     {
         return $this->belongsTo(MasterBidang::class, 'bidang_id');
+    }
+
+    protected static function booted()
+    {
+        // Hapus file dari storage jika ada foto yang dihapus saat update
+        static::updated(function ($report) {
+            $original = $report->getOriginal('dokumentasi_foto');
+            $originalPhotos = is_string($original) ? (json_decode($original, true) ?? []) : ($original ?? []);
+            $currentPhotos = $report->dokumentasi_foto ?? [];
+            
+            $removedPhotos = array_diff($originalPhotos, $currentPhotos);
+            
+            foreach ($removedPhotos as $photo) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($photo);
+            }
+        });
+
+        // Hapus semua file dari storage saat laporan dihapus permanen
+        static::deleted(function ($report) {
+            $photos = $report->dokumentasi_foto ?? [];
+            foreach ($photos as $photo) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($photo);
+            }
+        });
     }
 }

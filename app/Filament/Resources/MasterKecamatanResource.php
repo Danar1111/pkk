@@ -52,9 +52,9 @@ class MasterKecamatanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('index')
+                    ->label('No.')
+                    ->rowIndex(),
 
                 Tables\Columns\TextColumn::make('nama_kecamatan')
                     ->label('Nama Kecamatan')

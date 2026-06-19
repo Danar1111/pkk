@@ -10,7 +10,7 @@ class ViewLkpReport extends ViewRecord
 {
     protected static string $resource = LkpReportResource::class;
 
-    protected \Filament\Support\Enums\Width|string|null $maxContentWidth = '5xl';
+    protected \Filament\Support\Enums\Width|string|null $maxContentWidth = 'full';
 
     protected function getHeaderActions(): array
     {
