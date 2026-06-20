@@ -803,17 +803,24 @@ class AdminPanelProvider extends PanelProvider
                         background: #F4F6FA !important;
                         max-width: none !important;
                         width: 100% !important;
+                        padding-top: 0.5rem !important;
+                        padding-bottom: 1.5rem !important;
                         padding-left: 1rem !important;
                         padding-right: 1rem !important;
                     }
+                    .fi-main > div {
+                        padding-top: 0 !important;
+                    }
                     @media (min-width: 640px) {
                         .fi-main {
+                            padding-top: 0.75rem !important;
                             padding-left: 1.5rem !important;
                             padding-right: 1.5rem !important;
                         }
                     }
                     @media (min-width: 1024px) {
                         .fi-main {
+                            padding-top: 0.75rem !important;
                             padding-left: 2rem !important;
                             padding-right: 2rem !important;
                         }
@@ -822,10 +829,21 @@ class AdminPanelProvider extends PanelProvider
                         background: #F4F6FA !important;
                     }
 
+                    /* ---- Page Layout Spacing Overrides ---- */
+                    .fi-page-header-main-ctn {
+                        padding-top: 0.25rem !important;
+                        padding-bottom: 1rem !important;
+                        gap: 0.75rem !important;
+                    }
+                    .fi-page-content {
+                        gap: 0.75rem !important;
+                    }
+
                     /* ---- Page Header (Breadcrumbs & Title) ---- */
                     .fi-header {
                         margin-top: 0 !important;
-                        margin-bottom: 0.5rem !important;
+                        margin-bottom: 0 !important;
+                        gap: 0.125rem !important;
                     }
                     .fi-header-heading {
                         font-size: 1.5rem !important;
@@ -835,9 +853,109 @@ class AdminPanelProvider extends PanelProvider
                         margin: 0 !important;
                     }
                     .fi-page {
-                        gap: 0.75rem !important;
+                        margin-top: 0 !important;
+                        padding-top: 0 !important;
+                        gap: 0.5rem !important;
                         margin-left: auto !important;
                         margin-right: auto !important;
+                    }
+                    @media (max-width: 767px) {
+                        .fi-page-header-main-ctn {
+                            padding-top: 0.125rem !important;
+                            padding-bottom: 0.75rem !important;
+                            gap: 0.5rem !important;
+                        }
+                        .fi-page-content {
+                            gap: 0.5rem !important;
+                        }
+                        .fi-page {
+                            gap: 0.75rem !important;
+                        }
+                        .fi-header {
+                            margin-bottom: 0 !important;
+                            gap: 0.125rem !important;
+                        }
+                        .fi-header-heading {
+                            font-size: 1.25rem !important;
+                        }
+                        .fi-header-actions-ctn {
+                            width: 100% !important;
+                            display: flex !important;
+                            margin-top: 0.5rem !important;
+                            margin-bottom: 0 !important;
+                        }
+                        .fi-header-actions-ctn .fi-ac {
+                            width: 100% !important;
+                            display: flex !important;
+                            flex-direction: row !important;
+                            flex-wrap: nowrap !important;
+                            align-items: center !important;
+                            gap: 0.5rem !important;
+                        }
+                        .fi-header-actions-ctn .fi-ac > * {
+                            flex: 1 1 0% !important;
+                            width: auto !important;
+                            display: block !important;
+                        }
+                        .fi-header-actions-ctn .fi-btn {
+                            width: 100% !important;
+                            height: 2.25rem !important;
+                            display: inline-flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            border-radius: 0.5rem !important;
+                            font-size: 0.8rem !important;
+                            font-weight: 600 !important;
+                            box-shadow: none !important;
+                            border: none !important;
+                            transition: all 0.2s ease !important;
+                        }
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :first-child .fi-btn,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :first-child.fi-btn {
+                            background-color: #ffffff !important;
+                            color: #475569 !important;
+                            border: 1px solid #CBD5E1 !important;
+                        }
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :first-child .fi-btn svg,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :first-child.fi-btn svg {
+                            color: #475569 !important;
+                        }
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(2) .fi-btn,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(2).fi-btn {
+                            background-color: #FEF2F2 !important;
+                            color: #B91C1C !important;
+                            border: 1px solid #FEE2E2 !important;
+                        }
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(2) .fi-btn svg,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(2) .fi-btn .fi-btn-icon,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(2).fi-btn svg,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(2).fi-btn .fi-btn-icon {
+                            color: #B91C1C !important;
+                        }
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(3) .fi-btn,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(3).fi-btn {
+                            background-color: #2563EB !important;
+                            color: #ffffff !important;
+                            box-shadow: 0px 2px 8px rgba(37, 99, 235, 0.2) !important;
+                        }
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(3) .fi-btn svg,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(3) .fi-btn .fi-btn-icon,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(3).fi-btn svg,
+                        .fi-resource-view-record-page .fi-header-actions-ctn .fi-ac > :nth-child(3).fi-btn .fi-btn-icon {
+                            color: #ffffff !important;
+                        }
+                        .fi-breadcrumbs {
+                            display: flex !important;
+                            flex-wrap: wrap !important;
+                            gap: 0.25rem !important;
+                            margin-bottom: 0.125rem !important;
+                        }
+                        .fi-breadcrumbs-item, .fi-breadcrumbs-item a {
+                            font-size: 0.725rem !important;
+                        }
+                    }
+                    .fi-breadcrumbs {
+                        display: flex !important;
                     }
                     .fi-breadcrumbs-item, .fi-breadcrumbs-item a {
                         color: #64748B !important;
@@ -886,6 +1004,202 @@ class AdminPanelProvider extends PanelProvider
                         box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04) !important;
                         border: 1px solid #E2E8F0 !important;
                         background: #ffffff !important;
+                    }
+
+                    @media (max-width: 767px) {
+                        /* Table Container Header for Mobile */
+                        .fi-ta-header-ctn {
+                            display: flex !important;
+                            flex-direction: column !important;
+                            align-items: stretch !important;
+                            gap: 0.75rem !important;
+                            padding: 1rem !important;
+                            border-bottom: 1px solid #F1F5F9 !important;
+                        }
+                        
+                        /* Header actions container (Export buttons) */
+                        .fi-ta-header {
+                            width: 100% !important;
+                            display: flex !important;
+                            margin: 0 !important;
+                            padding: 0 !important;
+                            border-bottom: none !important;
+                            box-shadow: none !important;
+                        }
+                        
+                        .fi-ta-header .fi-ta-actions {
+                            display: flex !important;
+                            flex-direction: row !important;
+                            flex-wrap: wrap !important;
+                            gap: 0.5rem !important;
+                            width: 100% !important;
+                        }
+                        
+                        /* First button (Create action) takes 100% width on mobile */
+                        .fi-ta-header .fi-ta-actions > :first-child {
+                            flex: 1 1 100% !important;
+                        }
+                        
+                        /* Other buttons (Export actions) take 50% width each on mobile */
+                        .fi-ta-header .fi-ta-actions > :not(:first-child) {
+                            flex: 1 1 calc(50% - 0.25rem) !important;
+                        }
+                        
+                        /* Header buttons base styling */
+                        .fi-ta-header-ctn .fi-btn,
+                        .fi-ta-header .fi-ta-actions .fi-btn,
+                        .fi-ta-actions .fi-btn {
+                            height: 2.25rem !important;
+                            display: inline-flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            border-radius: 0.5rem !important;
+                            font-size: 0.8rem !important;
+                            font-weight: 600 !important;
+                            box-shadow: none !important;
+                            border: none !important;
+                        }
+
+                        /* 1st button (Laporan Baru): Solid Premium Blue */
+                        .fi-ta-header-ctn .fi-ta-actions > :first-child .fi-btn,
+                        .fi-ta-header-ctn .fi-ta-actions > :first-child.fi-btn,
+                        .fi-ta-header .fi-ta-actions > :first-child .fi-btn,
+                        .fi-ta-header .fi-ta-actions > :first-child.fi-btn {
+                            background-color: #2563EB !important;
+                            color: #ffffff !important;
+                            box-shadow: 0px 2px 8px rgba(37, 99, 235, 0.2) !important;
+                        }
+
+                        /* 2nd button (Export Excel): Soft outline green */
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(2) .fi-btn,
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(2).fi-btn,
+                        .fi-ta-header .fi-ta-actions > :nth-child(2) .fi-btn,
+                        .fi-ta-header .fi-ta-actions > :nth-child(2).fi-btn {
+                            background-color: #ECFDF5 !important;
+                            color: #047857 !important;
+                            border: 1px solid #A7F3D0 !important;
+                        }
+
+                        /* 3rd button (Export PDF): Soft outline red */
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(3) .fi-btn,
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(3).fi-btn,
+                        .fi-ta-header .fi-ta-actions > :nth-child(3) .fi-btn,
+                        .fi-ta-header .fi-ta-actions > :nth-child(3).fi-btn {
+                            background-color: #FEF2F2 !important;
+                            color: #B91C1C !important;
+                            border: 1px solid #FEE2E2 !important;
+                        }
+
+                        /* Target SVG and icon class inside Excel and PDF actions for high contrast color */
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(2) .fi-btn svg,
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(2) .fi-btn .fi-btn-icon,
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(2).fi-btn svg,
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(2).fi-btn .fi-btn-icon,
+                        .fi-ta-header .fi-ta-actions > :nth-child(2) .fi-btn svg,
+                        .fi-ta-header .fi-ta-actions > :nth-child(2) .fi-btn .fi-btn-icon,
+                        .fi-ta-header .fi-ta-actions > :nth-child(2).fi-btn svg,
+                        .fi-ta-header .fi-ta-actions > :nth-child(2).fi-btn .fi-btn-icon {
+                            color: #047857 !important;
+                        }
+
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(3) .fi-btn svg,
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(3) .fi-btn .fi-btn-icon,
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(3).fi-btn svg,
+                        .fi-ta-header-ctn .fi-ta-actions > :nth-child(3).fi-btn .fi-btn-icon,
+                        .fi-ta-header .fi-ta-actions > :nth-child(3) .fi-btn svg,
+                        .fi-ta-header .fi-ta-actions > :nth-child(3) .fi-btn .fi-btn-icon,
+                        .fi-ta-header .fi-ta-actions > :nth-child(3).fi-btn svg,
+                        .fi-ta-header .fi-ta-actions > :nth-child(3).fi-btn .fi-btn-icon {
+                            color: #B91C1C !important;
+                        }
+
+                        /* Header toolbar (Search, Filters, Sort) */
+                        .fi-ta-header-toolbar {
+                            display: flex !important;
+                            flex-direction: column !important;
+                            align-items: stretch !important;
+                            gap: 0.75rem !important;
+                            width: 100% !important;
+                            border: none !important;
+                            padding: 0 !important;
+                            margin: 0 !important;
+                            background: transparent !important;
+                            box-shadow: none !important;
+                        }
+
+                        /* Target the row containing search field and filters trigger directly */
+                        .fi-ta-header-toolbar > div:has(.fi-ta-search-field),
+                        .fi-ta-header-toolbar > div:has(.fi-ta-filters-dropdown),
+                        .fi-ta-header-toolbar > div:has(.fi-ta-filters-modal),
+                        .fi-ta-header-toolbar > div:has(.fi-ta-filters-trigger-action-ctn) {
+                            display: flex !important;
+                            flex-direction: row !important;
+                            flex-wrap: nowrap !important;
+                            align-items: center !important;
+                            gap: 0.75rem !important;
+                            width: 100% !important;
+                            margin: 0 !important;
+                            padding: 0 0.5rem 0 0 !important; /* Keep the absolute-positioned filter badge inside the card */
+                            border: none !important;
+                            box-sizing: border-box !important;
+                        }
+
+                        .fi-ta-search-field {
+                            flex-grow: 1 !important;
+                            width: auto !important;
+                            max-width: 100% !important;
+                            margin: 0 !important;
+                        }
+
+                        .fi-ta-search-field .fi-input-wrp {
+                            height: 2.5rem !important;
+                            border: 1px solid #E2E8F0 !important;
+                            box-shadow: none !important;
+                            border-radius: 9999px !important; /* Search pill on mobile */
+                        }
+
+                        /* Filter triggers containers (trigger container / modal trigger / dropdown trigger) */
+                        .fi-ta-filters-trigger-action-ctn,
+                        .fi-ta-filters-modal,
+                        .fi-ta-filters-dropdown {
+                            flex-shrink: 0 !important;
+                            margin: 0 !important;
+                            padding: 0 !important;
+                            display: inline-flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                        }
+
+                        /* Outer filter trigger button styling */
+                        .fi-ta-filters-trigger-action-ctn .fi-icon-btn,
+                        .fi-ta-filters-modal .fi-icon-btn,
+                        .fi-ta-filters-dropdown .fi-icon-btn,
+                        .fi-ta-filters-trigger-action-ctn button,
+                        .fi-ta-filters-modal button,
+                        .fi-ta-filters-dropdown button {
+                            width: 2.5rem !important;
+                            height: 2.5rem !important;
+                            border-radius: 9999px !important; /* Rounded filter icon button */
+                            border: 1px solid #E2E8F0 !important;
+                            background-color: #F8FAFC !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                        }
+
+                        /* If there is any other row, make sure it displays correctly */
+                        .fi-ta-header-toolbar > div:not(:has(.fi-ta-search-field)):not(:has(.fi-ta-filters-dropdown)):not(:has(.fi-ta-filters-modal)):not(:has(.fi-ta-filters-trigger-action-ctn)) {
+                            display: flex !important;
+                            flex-direction: row !important;
+                            flex-wrap: nowrap !important;
+                            align-items: center !important;
+                            justify-content: space-between !important;
+                            gap: 0.5rem !important;
+                            width: 100% !important;
+                            margin: 0 !important;
+                            padding: 0.25rem 0 !important;
+                            border-top: none !important;
+                        }
                     }
 
                     /* Align search field and filter on the left, header actions on the right in all standard tables */
@@ -1245,6 +1559,126 @@ class AdminPanelProvider extends PanelProvider
                     body:has(.filament-sticky-col) *:has(> * > * > * > * > * > * > .filament-sticky-col),
                     body:has(.filament-sticky-col) *:has(> * > * > * > * > * > * > * > .filament-sticky-col) {
                         overflow: visible !important;
+                    }
+
+                    /* =======================================================
+                       LKP Report List Mobile Card Enhancements & Responsiveness
+                       ======================================================= */
+                    /* Image banner style on mobile, fixed square on desktop */
+                    .fi-ta-report-img {
+                        width: 100% !important;
+                        height: 180px !important;
+                        object-fit: cover !important;
+                        border-radius: 0.75rem !important;
+                    }
+
+                    @media (min-width: 768px) {
+                        .fi-ta-report-img {
+                            width: 150px !important;
+                            min-width: 150px !important;
+                            max-width: 150px !important;
+                            height: 150px !important;
+                        }
+                    }
+
+                    /* Align actions nicely inside the report cards on mobile */
+                    @media (max-width: 767px) {
+                        /* Checkbox vertical alignment when image and text stack */
+                        .fi-ta-record > div {
+                            align-items: flex-start !important;
+                        }
+
+                        /* Make "Lihat" button full width on mobile, other three share the row below */
+                        .fi-ta-record .fi-ta-actions .fi-ta-action-view {
+                            flex: 1 1 100% !important;
+                            order: -1 !important; /* Push to the top row */
+                            padding: 0.6rem 0.25rem !important; /* Slightly taller for primary action */
+                            font-size: 0.8rem !important;
+                        }
+
+                        .fi-ta-record .fi-ta-actions .fi-ta-action-pdf,
+                        .fi-ta-record .fi-ta-actions .fi-ta-action-edit,
+                        .fi-ta-record .fi-ta-actions .fi-ta-action-delete {
+                            flex: 1 1 calc(33.333% - 0.35rem) !important;
+                            min-width: 60px !important;
+                        }
+                    }
+                    
+                    /* Premium Segmented Action Buttons Row - Applied globally (Mobile, Tablet, Desktop) */
+                    .fi-ta-record .fi-ta-actions {
+                        display: flex !important;
+                        flex-wrap: wrap !important;
+                        gap: 0.5rem !important;
+                        width: 100% !important;
+                        margin-top: 1rem !important;
+                        padding-top: 0.75rem !important;
+                        border-top: 1px solid #F1F5F9 !important;
+                    }
+
+                    .fi-ta-record .fi-ta-actions a,
+                    .fi-ta-record .fi-ta-actions button {
+                        flex: 1 1 calc(25% - 0.375rem) !important;
+                        min-width: 70px !important;
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        gap: 0.25rem !important;
+                        padding: 0.5rem 0.25rem !important;
+                        font-size: 0.75rem !important;
+                        font-weight: 600 !important;
+                        border-radius: 0.5rem !important;
+                        background-color: #F8FAFC !important;
+                        border: 1px solid #E2E8F0 !important;
+                        transition: all 0.2s ease !important;
+                        box-shadow: none !important;
+                    }
+
+                    /* Force SVG colors to inherit text color */
+                    .fi-ta-record .fi-ta-actions a svg,
+                    .fi-ta-record .fi-ta-actions button svg {
+                        width: 1rem !important;
+                        height: 1rem !important;
+                        color: inherit !important;
+                        margin: 0 !important;
+                    }
+
+                    /* Colored buttons schemes */
+                    /* 1. PDF (Export/Single): Soft red */
+                    .fi-ta-record .fi-ta-actions .fi-ta-action-pdf {
+                        background-color: #FEF2F2 !important;
+                        border-color: #FEE2E2 !important;
+                        color: #B91C1C !important;
+                    }
+
+                    /* 2. Lihat (View): Soft blue */
+                    .fi-ta-record .fi-ta-actions .fi-ta-action-view {
+                        background-color: #EFF6FF !important;
+                        border-color: #DBEAFE !important;
+                        color: #1D4ED8 !important;
+                    }
+
+                    /* 3. Ubah (Edit): Soft purple */
+                    .fi-ta-record .fi-ta-actions .fi-ta-action-edit {
+                        background-color: #F5F3FF !important;
+                        border-color: #EDE9FE !important;
+                        color: #6D28D9 !important;
+                    }
+
+                    /* 4. Hapus (Delete): Soft rose */
+                    .fi-ta-record .fi-ta-actions .fi-ta-action-delete {
+                        background-color: #FFF5F5 !important;
+                        border-color: #FED7D7 !important;
+                        color: #E11D48 !important;
+                    }
+
+                    /* 5. Align Form Actions to the Right on LKP Report Create & Edit Pages (Desktop Only) */
+                    @media (min-width: 1024px) {
+                        .fi-resource-lkp-reports.fi-resource-create-record-page form .fi-ac:has(button[type="submit"]),
+                        .fi-resource-lkp-reports.fi-resource-edit-record-page form .fi-ac:has(button[type="submit"]),
+                        .fi-resource-lkp-reports.fi-resource-create-record-page form .fi-ac:last-child,
+                        .fi-resource-lkp-reports.fi-resource-edit-record-page form .fi-ac:last-child {
+                            justify-content: flex-end !important;
+                        }
                     }
                 </style>
                 ')

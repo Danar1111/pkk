@@ -2,8 +2,8 @@
     <style>
         .pkk-stats-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
             width: 100%;
         }
         @media (min-width: 640px) {
@@ -34,29 +34,95 @@
         .custom-dropdown-list::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+
+        /* Custom modal details animations and responsive bottom sheet */
+        .custom-details-modal-overlay {
+            animation: custom-fade-in 0.25s ease-out;
+        }
+
+        .custom-details-modal-card {
+            animation: custom-zoom-in 0.25s ease-out;
+        }
+
+        @keyframes custom-fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes custom-zoom-in {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes custom-slide-up {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        @media (max-width: 639px) {
+            .custom-details-modal-overlay {
+                align-items: flex-end !important;
+            }
+            .custom-details-modal-card {
+                border-radius: 1.5rem 1.5rem 0 0 !important;
+                margin-bottom: 0 !important;
+                max-height: 90vh !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                animation: custom-slide-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            }
+            .pkk-stat-card {
+                padding: 1rem !important;
+                gap: 0.5rem !important;
+            }
+            .pkk-stat-icon-wrapper {
+                width: 2.25rem !important;
+                height: 2.25rem !important;
+                border-radius: 0.5rem !important;
+            }
+            .pkk-stat-icon-wrapper svg {
+                width: 1.25rem !important;
+                height: 1.25rem !important;
+            }
+            .pkk-stat-title {
+                font-size: 0.75rem !important;
+            }
+            .pkk-stat-value {
+                font-size: 1.5rem !important;
+                margin-top: 0.125rem !important;
+            }
+            .pkk-stat-footer {
+                display: none !important;
+            }
+            .pkk-stat-detail-badge {
+                font-size: 0.6rem !important;
+                padding: 0.2rem 0.35rem !important;
+                border-radius: 0.375rem !important;
+            }
+        }
     </style>
 
     <div class="pkk-stats-grid">
         
         <!-- Card 1: Total Laporan -->
-        <div style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04);">
+        <div class="pkk-stat-card" style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04);">
             <div style="display: flex; justify-content: flex-start; align-items: center; width: 100%;">
-                <div style="width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; background-color: #E3F2FD; display: flex; align-items: center; justify-content: center;">
+                <div class="pkk-stat-icon-wrapper" style="width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; background-color: #E3F2FD; display: flex; align-items: center; justify-content: center;">
                     <svg style="width: 1.5rem; height: 1.5rem; color: #1E88E5;" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                 </div>
             </div>
             <div>
-                <p style="font-size: 0.875rem; font-weight: 600; color: #64748B; margin: 0;">Total Laporan</p>
-                <h3 style="font-size: 2rem; font-weight: 800; color: #0F172A; margin: 0.25rem 0 0 0; letter-spacing: -0.03em;">{{ $totalReports }}</h3>
+                <p class="pkk-stat-title" style="font-size: 0.875rem; font-weight: 600; color: #64748B; margin: 0;">Total Laporan</p>
+                <h3 class="pkk-stat-value" style="font-size: 2rem; font-weight: 800; color: #0F172A; margin: 0.25rem 0 0 0; letter-spacing: -0.03em;">{{ $totalReports }}</h3>
             </div>
         </div>
 
         <!-- Card 2: Laporan Bulan Ini / Terfilter -->
-        <div style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04);">
+        <div class="pkk-stat-card" style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                <div style="width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; background-color: #FFF8E1; display: flex; align-items: center; justify-content: center;">
+                <div class="pkk-stat-icon-wrapper" style="width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; background-color: #FFF8E1; display: flex; align-items: center; justify-content: center;">
                     <svg style="width: 1.5rem; height: 1.5rem; color: #FFB300;" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                     </svg>
@@ -77,15 +143,15 @@
                 </div>
             </div>
             <div>
-                <p style="font-size: 0.875rem; font-weight: 600; color: #64748B; margin: 0;">{{ $monthlyLabel }}</p>
-                <h3 style="font-size: 2rem; font-weight: 800; color: #0F172A; margin: 0.25rem 0 0 0; letter-spacing: -0.03em;">{{ $monthlyReports }}</h3>
+                <p class="pkk-stat-title" style="font-size: 0.875rem; font-weight: 600; color: #64748B; margin: 0;">{{ $monthlyLabel }}</p>
+                <h3 class="pkk-stat-value" style="font-size: 2rem; font-weight: 800; color: #0F172A; margin: 0.25rem 0 0 0; letter-spacing: -0.03em;">{{ $monthlyReports }}</h3>
             </div>
         </div>
 
         <!-- Card 3: Total Kecamatan -->
-        <div style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04);">
+        <div class="pkk-stat-card" style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04);">
             <div style="display: flex; justify-content: flex-start; align-items: center; width: 100%;">
-                <div style="width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; background-color: #E0F7FA; display: flex; align-items: center; justify-content: center;">
+                <div class="pkk-stat-icon-wrapper" style="width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; background-color: #E0F7FA; display: flex; align-items: center; justify-content: center;">
                     <svg style="width: 1.5rem; height: 1.5rem; color: #00ACC1;" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
@@ -93,27 +159,27 @@
                 </div>
             </div>
             <div>
-                <p style="font-size: 0.875rem; font-weight: 600; color: #64748B; margin: 0;">Total Kecamatan</p>
-                <h3 style="font-size: 2rem; font-weight: 800; color: #0F172A; margin: 0.25rem 0 0 0; letter-spacing: -0.03em;">{{ $totalKecamatan }}</h3>
+                <p class="pkk-stat-title" style="font-size: 0.875rem; font-weight: 600; color: #64748B; margin: 0;">Total Kecamatan</p>
+                <h3 class="pkk-stat-value" style="font-size: 2rem; font-weight: 800; color: #0F172A; margin: 0.25rem 0 0 0; letter-spacing: -0.03em;">{{ $totalKecamatan }}</h3>
             </div>
         </div>
 
         <!-- Card 4: Bidang Terlapor (Clickable) -->
-        <div wire:click="openDetails" style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04); cursor: pointer; transition: all 0.25s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='#90CAF9'; this.style.boxShadow='0px 8px 30px rgba(30, 136, 229, 0.1)';" onmouseout="this.style.transform='none'; this.style.borderColor='#E2E8F0'; this.style.boxShadow='0px 4px 20px rgba(18, 26, 33, 0.04)';">
+        <div class="pkk-stat-card" wire:click="openDetails" style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 1rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; box-shadow: 0px 4px 20px rgba(18, 26, 33, 0.04); cursor: pointer; transition: all 0.25s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.borderColor='#90CAF9'; this.style.boxShadow='0px 8px 30px rgba(30, 136, 229, 0.1)';" onmouseout="this.style.transform='none'; this.style.borderColor='#E2E8F0'; this.style.boxShadow='0px 4px 20px rgba(18, 26, 33, 0.04)';">
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                <div style="width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; background-color: #F1F5F9; display: flex; align-items: center; justify-content: center;">
+                <div class="pkk-stat-icon-wrapper" style="width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; background-color: #F1F5F9; display: flex; align-items: center; justify-content: center;">
                     <svg style="width: 1.5rem; height: 1.5rem; color: #475569;" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-3.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                     </svg>
                 </div>
-                <div style="color: #1E88E5; padding: 0.35rem 0.5rem; border-radius: 0.5rem; background-color: #E3F2FD; border: 1px solid #BBDEFB; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;">
+                <div class="pkk-stat-detail-badge" style="color: #1E88E5; padding: 0.35rem 0.5rem; border-radius: 0.5rem; background-color: #E3F2FD; border: 1px solid #BBDEFB; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;">
                     Detail
                 </div>
             </div>
             <div>
-                <p style="font-size: 0.875rem; font-weight: 600; color: #64748B; margin: 0;">{{ $bidangLabel }}</p>
-                <h3 style="font-size: 2rem; font-weight: 800; color: #0F172A; margin: 0.25rem 0 0 0; letter-spacing: -0.03em;">{{ $reportedBidangCount }} / {{ $totalBidangCount }}</h3>
-                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 500; display: block; margin-top: 0.125rem;">Klik untuk melihat status bidang</span>
+                <p class="pkk-stat-title" style="font-size: 0.875rem; font-weight: 600; color: #64748B; margin: 0;">{{ $bidangLabel }}</p>
+                <h3 class="pkk-stat-value" style="font-size: 2rem; font-weight: 800; color: #0F172A; margin: 0.25rem 0 0 0; letter-spacing: -0.03em;">{{ $reportedBidangCount }} / {{ $totalBidangCount }}</h3>
+                <span class="pkk-stat-footer" style="font-size: 0.75rem; color: #94A3B8; font-weight: 500; display: block; margin-top: 0.125rem;">Klik untuk melihat status bidang</span>
             </div>
         </div>
 
@@ -202,8 +268,8 @@
 
     <!-- Modal Detail Bidang -->
     @if($showDetailsModal)
-        <div style="position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 9999;">
-            <div style="background-color: #ffffff; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); border: 1px solid #E2E8F0; width: 100%; max-width: 36rem; padding: 1.75rem; display: flex; flex-direction: column; gap: 1.25rem; position: relative; max-height: 85vh;">
+        <div class="custom-details-modal-overlay" style="position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 9999;">
+            <div class="custom-details-modal-card" style="background-color: #ffffff; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); border: 1px solid #E2E8F0; width: 100%; max-width: 36rem; padding: 1.75rem; display: flex; flex-direction: column; gap: 1.25rem; position: relative; max-height: 85vh;">
                 
                 <!-- Close Button -->
                 <button wire:click="closeDetails" type="button" style="position: absolute; top: 1.25rem; right: 1.25rem; color: #94A3B8; cursor: pointer; background: transparent; border: none; padding: 0; outline: none; transition: color 0.15s;" onmouseover="this.style.color='#475569'" onmouseout="this.style.color='#94A3B8'">

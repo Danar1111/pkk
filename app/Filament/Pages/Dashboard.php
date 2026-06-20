@@ -13,6 +13,68 @@ class Dashboard extends \Filament\Pages\Dashboard
             <style>
                 header.fi-header { display: none !important; }
                 
+                @media (max-width: 767px) {
+                    /* Style the table card header and toolbar for mobile */
+                    .fi-wi-widget .fi-ta-header-ctn {
+                        flex-direction: column !important;
+                        align-items: stretch !important;
+                        gap: 1rem !important;
+                        padding: 1.25rem 1rem !important;
+                        border-bottom: 1px solid #F1F5F9 !important;
+                    }
+                    .fi-wi-widget .fi-ta-header {
+                        display: flex !important;
+                        flex-direction: column !important;
+                        gap: 0.75rem !important;
+                    }
+                    .fi-wi-widget .fi-ta-header-toolbar {
+                        display: flex !important;
+                        flex-direction: column !important;
+                        align-items: stretch !important;
+                        gap: 0.75rem !important;
+                        padding: 0 !important;
+                        margin: 0 !important;
+                        border: none !important;
+                        background: transparent !important;
+                        box-shadow: none !important;
+                    }
+                    .fi-wi-widget .fi-ta-header-toolbar > div {
+                        margin: 0 !important;
+                        width: 100% !important;
+                    }
+                    .fi-wi-widget .fi-ta-search-field {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                    }
+                    .fi-wi-widget .fi-ta-search-field .fi-input-wrp {
+                        height: 2.5rem !important;
+                        border: 1px solid #E2E8F0 !important;
+                        box-shadow: none !important;
+                        border-radius: 9999px !important; /* Make it a search pill on mobile */
+                    }
+                    .fi-wi-widget .fi-ta-actions {
+                        display: flex !important;
+                        flex-direction: row !important;
+                        flex-wrap: nowrap !important; /* side-by-side */
+                        align-items: center !important;
+                        gap: 0.5rem !important;
+                        padding: 0 !important;
+                        margin: 0 !important;
+                        width: 100% !important;
+                    }
+                    .fi-wi-widget .fi-ta-actions .fi-btn {
+                        flex: 1 1 50% !important; /* take up half width each */
+                        height: 2.5rem !important;
+                        padding-top: 0 !important;
+                        padding-bottom: 0 !important;
+                        font-size: 0.825rem !important;
+                        display: inline-flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        border-radius: 9999px !important; /* pill buttons */
+                    }
+                }
+                
                 @media (min-width: 768px) {
                     .fi-wi-widget .fi-ta-header-ctn {
                         display: flex !important;

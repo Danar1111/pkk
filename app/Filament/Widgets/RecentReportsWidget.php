@@ -52,7 +52,7 @@ class RecentReportsWidget extends BaseWidget
             ->description('5 laporan terakhir yang masuk ke sistem.')
             ->headerActions([
                 \Filament\Actions\Action::make('create')
-                    ->label('Buat Laporan Baru')
+                    ->label('Laporan Baru')
                     ->url(\App\Filament\Resources\LkpReportResource::getUrl('create'))
                     ->icon('heroicon-o-plus')
                     ->button(),
@@ -74,10 +74,12 @@ class RecentReportsWidget extends BaseWidget
                     ->wrap(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Pelapor')
-                    ->searchable(),
+                    ->searchable()
+                    ->visibleFrom('md'),
                 Tables\Columns\TextColumn::make('bidang.nama_bidang')
                     ->label('Bidang')
-                    ->searchable(),
+                    ->searchable()
+                    ->visibleFrom('md'),
                 Tables\Columns\TextColumn::make('skala_lkp')
                     ->label('Skala / Wilayah')
                     ->formatStateUsing(function ($record) {
@@ -87,7 +89,8 @@ class RecentReportsWidget extends BaseWidget
                         return 'Kabupaten';
                     })
                     ->badge()
-                    ->color(fn ($state) => ($state === 'Kecamatan' || str_starts_with($state ?? '', 'Kec')) ? 'info' : 'success'),
+                    ->color(fn ($state) => ($state === 'Kecamatan' || str_starts_with($state ?? '', 'Kec')) ? 'info' : 'success')
+                    ->visibleFrom('md'),
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()

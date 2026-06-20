@@ -175,11 +175,8 @@ class LkpReportResource extends Resource
                 Tables\Columns\Layout\Split::make([
                     Tables\Columns\ImageColumn::make('dokumentasi_foto')
                         ->disk('public')
-                        ->height('150px')
-                        ->width('150px')
                         ->extraImgAttributes([
-                            'class' => 'object-cover rounded-xl shadow-sm',
-                            'style' => 'width: 150px; height: 150px; min-width: 150px; max-width: 150px;'
+                            'class' => 'object-cover rounded-xl shadow-sm fi-ta-report-img',
                         ])
                         ->defaultImageUrl(asset('images/placeholder.png'))
                         ->limit(1)
@@ -222,7 +219,8 @@ class LkpReportResource extends Resource
                             ->size('sm')
                             ->icon('heroicon-m-map-pin'),
                     ])->space(2),
-                ])->extraAttributes(['class' => 'gap-6 items-start'])
+                ])->from('md')
+                  ->extraAttributes(['class' => 'gap-6 items-start'])
             ])
             ->filters([
                 Tables\Filters\Filter::make('tanggal')
@@ -321,6 +319,7 @@ class LkpReportResource extends Resource
                     ->tooltip('Unduh PDF Laporan Ini')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('danger')
+                    ->extraAttributes(['class' => 'fi-ta-action-pdf'])
                     ->action(function (LkpReport $record) {
                         $pdf = Pdf::loadView('pdf.lkp-report', [
                             'records' => collect([$record]),
@@ -333,11 +332,20 @@ class LkpReportResource extends Resource
                             'Laporan-' . str($record->judul_laporan)->slug() . '-' . now()->format('Y-m-d') . '.pdf'
                         );
                     }),
-                \Filament\Actions\ViewAction::make(),
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\DeleteAction::make(),
+                \Filament\Actions\ViewAction::make()
+                    ->extraAttributes(['class' => 'fi-ta-action-view']),
+                \Filament\Actions\EditAction::make()
+                    ->extraAttributes(['class' => 'fi-ta-action-edit']),
+                \Filament\Actions\DeleteAction::make()
+                    ->extraAttributes(['class' => 'fi-ta-action-delete']),
             ])
             ->headerActions([
+                \Filament\Actions\Action::make('create')
+                    ->label('Laporan Baru')
+                    ->url(fn (): string => LkpReportResource::getUrl('create'))
+                    ->icon('heroicon-o-plus')
+                    ->button(),
+
                 ExportAction::make()
                     ->exports([
                         ExcelExport::make('laporan_lkp')

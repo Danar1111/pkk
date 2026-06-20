@@ -394,12 +394,12 @@
     <!-- Sejarah Section -->
     <section id="sejarah" class="py-20 lg:py-32 bg-white relative border-t border-gray-100 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="lg:grid lg:grid-cols-2 gap-16 items-center">
-                <div class="order-2 lg:order-1 mt-12 lg:mt-0 relative" data-aos="fade-right">
-                    <div class="absolute inset-0 bg-secondary rounded-3xl translate-x-4 translate-y-4 -z-10"></div>
-                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sejarah PKK" class="rounded-3xl shadow-xl w-full object-cover h-[400px]">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class="relative pr-4 pb-4" data-aos="fade-right">
+                    <div class="absolute top-4 left-4 right-0 bottom-0 bg-secondary rounded-3xl -z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sejarah PKK" class="rounded-3xl shadow-xl w-full object-cover h-[250px] sm:h-[350px] lg:h-[400px]">
                 </div>
-                <div class="order-1 lg:order-2" data-aos="fade-left">
+                <div data-aos="fade-left">
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 text-tertiary">Sejarah Gerakan PKK</h2>
                     <h3 class="text-lg md:text-xl font-bold text-primary mb-6">Jejak Langkah Pengabdian</h3>
                     <p class="text-lg text-neutral leading-relaxed mb-6">
