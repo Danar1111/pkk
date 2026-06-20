@@ -21,6 +21,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -1289,6 +1290,23 @@ class AdminPanelProvider extends PanelProvider
                         <span style="display: inline-block; vertical-align: middle; margin-left: 0.125rem;">Kembali ke Halaman Awal</span>
                     </a>
                     '
+            )
+            ->renderHook(
+                'panels::body.end',
+                fn (): HtmlString => new HtmlString('
+                <style>
+                    .fi-no {
+                        box-shadow: none !important;
+                        border: none !important;
+                        pointer-events: none !important;
+                    }
+                    .fi-no-notification {
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+                        border: 1px solid rgba(0, 0, 0, 0.05) !important;
+                        pointer-events: auto !important;
+                    }
+                </style>
+                ')
             )
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\Filament\Clusters')

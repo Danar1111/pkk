@@ -16,3 +16,15 @@
     --color-primary-light: #E3F2FD;
     --color-primary-dark: #1565C0;
 }
+
+.fi-no {
+    box-shadow: none !important;
+    border: none !important;
+    pointer-events: none !important;
+}
+
+.fi-no-notification {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    pointer-events: auto !important;
+}
