@@ -579,6 +579,59 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Staf Ahli -->
+                <div data-aos="fade-up" class="md:col-span-2 bg-gradient-to-r from-blue-50/50 to-amber-50/30 rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                    <div class="flex flex-col md:flex-row md:items-center gap-6 justify-between mb-8">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-extrabold text-tertiary">Staf Ahli TP PKK</h3>
+                                <p class="text-sm text-neutral mt-1">Dewan penasihat akademis dan teknis dalam koordinasi 10 Program Pokok PKK.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 bg-white rounded-2xl p-6 border border-gray-100/50 shadow-sm">
+                        <!-- Staf Ahli 1 -->
+                        <div class="flex gap-4 items-center p-3 hover:bg-gray-50 rounded-xl transition-colors duration-200">
+                            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-sm">SA</div>
+                            <div>
+                                <h4 class="font-bold text-tertiary text-base leading-snug">Iwan Gustiawan, S.Hut., M.P.</h4>
+                                <p class="text-sm text-neutral mt-0.5">Staf Ahli Bidang Ketahanan Pangan</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Staf Ahli 2 -->
+                        <div class="flex gap-4 items-center p-3 hover:bg-gray-50 rounded-xl transition-colors duration-200">
+                            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-sm">SA</div>
+                            <div>
+                                <h4 class="font-bold text-tertiary text-base leading-snug">Aas Hasanah, M.Pd.</h4>
+                                <p class="text-sm text-neutral mt-0.5">Staf Ahli Bidang Pendidikan Karakter</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Staf Ahli 3 -->
+                        <div class="flex gap-4 items-center p-3 hover:bg-gray-50 rounded-xl transition-colors duration-200">
+                            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-sm">SA</div>
+                            <div>
+                                <h4 class="font-bold text-tertiary text-base leading-snug">Hj. Imas Permasih, S.Sos., M.Si.</h4>
+                                <p class="text-sm text-neutral mt-0.5">Staf Ahli Bidang Ketahanan Ekonomi Keluarga</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Staf Ahli 4 -->
+                        <div class="flex gap-4 items-center p-3 hover:bg-gray-50 rounded-xl transition-colors duration-200">
+                            <div class="flex-shrink-0 w-11 h-11 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-sm">SA</div>
+                            <div>
+                                <h4 class="font-bold text-tertiary text-base leading-snug">dr. H. Rahmatullah Sidik</h4>
+                                <p class="text-sm text-neutral mt-0.5">Staf Ahli Bidang Kesehatan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Pokja I -->
                 <div data-aos="fade-up" class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                     <div class="w-14 h-14 rounded-2xl bg-blue-50 text-primary flex items-center justify-center mb-6">
