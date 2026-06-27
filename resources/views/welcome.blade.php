@@ -210,7 +210,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
             <div class="text-center max-w-3xl mx-auto">
                 <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Galeri Kegiatan</h2>
-                <p class="text-lg text-neutral">Dokumentasi momen gotong royong, posyandu, dan kebersamaan seluruh kader TP PKK Sumedang.</p>
             </div>
         </div>
 
