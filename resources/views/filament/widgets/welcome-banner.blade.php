@@ -1,13 +1,27 @@
 <x-filament-widgets::widget>
     @php
-        // Daftar gambar banner – dipilih acak tiap render (navigasi/refresh)
-        $bannerImages = [
-            asset('images/banner-1.png'), // PKK gathering
-            asset('images/banner-2.png'), // Posyandu
-            asset('images/banner-3.png'), // UMKM
-            asset('images/banner-4.png'), // Gotong Royong
-            asset('images/banner-5.png'), // Pendidikan
-        ];
+        $galleryDir = public_path('images/gallery');
+        $bannerImages = [];
+        if (file_exists($galleryDir)) {
+            $files = scandir($galleryDir);
+            foreach ($files as $file) {
+                if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp', 'gif'])) {
+                    $bannerImages[] = asset('images/gallery/' . $file);
+                }
+            }
+        }
+
+        // Fallback jika kosong
+        if (empty($bannerImages)) {
+            $bannerImages = [
+                asset('images/banner-1.png'),
+                asset('images/banner-2.png'),
+                asset('images/banner-3.png'),
+                asset('images/banner-4.png'),
+                asset('images/banner-5.png'),
+            ];
+        }
+
         $randomImage = $bannerImages[array_rand($bannerImages)];
     @endphp
 

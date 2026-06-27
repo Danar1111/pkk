@@ -30,6 +30,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Portal LKP Cerdas TP PKK</title>
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <!-- Fonts -->
@@ -316,7 +319,7 @@
                             
                             <h3 class="text-2xl font-bold mb-4">Visi Utama</h3>
                             <p class="text-lg lg:text-xl font-medium leading-relaxed text-white/95">
-                                "Terwujudnya keluarga yang beriman dan bertakwa kepada Tuhan Yang Maha Esa, berakhlak mulia dan berbudi luhur, sehat, sejahtera, maju dan mandiri, kesetaraan dan keadilan gender, serta memiliki kesadaran hukum dan lingkungan."
+                                "Terwujudnya Keluarga Berdaya dan Sejahtera Untuk Mendukung Cita-Cita Indonesia Emas 2045"
                             </p>
                         </div>
                     </div>
@@ -336,8 +339,8 @@
                                 1
                             </div>
                             <div>
-                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Peningkatan Mental & Spiritual</h4>
-                                <p class="text-neutral text-sm mt-1 leading-relaxed">Meningkatkan perilaku hidup beriman dan bertakwa kepada Tuhan YME, menghayati dan mengamalkan Pancasila, serta menumbuhkan kesadaran hukum dan gotong royong.</p>
+                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Penguatan Karakter</h4>
+                                <p class="text-neutral text-sm mt-1 leading-relaxed">Membentuk karakter keluarga melalui pola asuh yang sesuai dengan nilai-nilai Pancasila.</p>
                             </div>
                         </div>
 
@@ -347,8 +350,8 @@
                                 2
                             </div>
                             <div>
-                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Pendidikan & Peningkatan Ekonomi</h4>
-                                <p class="text-neutral text-sm mt-1 leading-relaxed">Meningkatkan kualitas pendidikan dan keterampilan kader serta keluarga guna mencerdaskan kehidupan bangsa dan mengembangkan usaha ekonomi keluarga.</p>
+                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Pendidikan dan Ekonomi</h4>
+                                <p class="text-neutral text-sm mt-1 leading-relaxed">Meningkatkan pendidikan dan ekonomi keluarga melalui peningkatan keterampilan dan pengembangan koperasi.</p>
                             </div>
                         </div>
 
@@ -358,8 +361,8 @@
                                 3
                             </div>
                             <div>
-                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Kesejahteraan Fisik & Pangan</h4>
-                                <p class="text-neutral text-sm mt-1 leading-relaxed">Mewujudkan kemandirian pangan keluarga melalui pemanfaatan lahan pekarangan (HATINYA PKK), pemenuhan sandang, serta perumahan yang layak dan sehat.</p>
+                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Ketahanan Keluarga</h4>
+                                <p class="text-neutral text-sm mt-1 leading-relaxed">Meningkatkan ketahanan keluarga melalui pemenuhan pangan, sandang, dan perumahan sehat.</p>
                             </div>
                         </div>
 
@@ -369,8 +372,8 @@
                                 4
                             </div>
                             <div>
-                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Kesehatan & Perencanaan Keluarga</h4>
-                                <p class="text-neutral text-sm mt-1 leading-relaxed">Meningkatkan derajat kesehatan keluarga, pencegahan stunting, pelestarian lingkungan hidup, serta membiasakan perencanaan keluarga berencana.</p>
+                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Kesehatan dan Lingkungan</h4>
+                                <p class="text-neutral text-sm mt-1 leading-relaxed">Meningkatkan derajat kesehatan keluarga, kelestarian lingkungan hidup, dan perencanaan sehat.</p>
                             </div>
                         </div>
 
@@ -380,8 +383,8 @@
                                 5
                             </div>
                             <div>
-                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Penguatan Kelembagaan PKK</h4>
-                                <p class="text-neutral text-sm mt-1 leading-relaxed">Memantapkan pengelolaan gerakan PKK secara sistematis, terencana, dan adaptif terhadap perkembangan teknologi informasi demi pelayanan yang optimal.</p>
+                                <h4 class="font-bold text-lg text-tertiary group-hover:text-primary transition-colors duration-200">Tata Kelola Kelembagaan</h4>
+                                <p class="text-neutral text-sm mt-1 leading-relaxed">Mengoptimalkan pengelolaan Gerakan PKK yang adaptif, terstruktur, dan berorientasi hasil.</p>
                             </div>
                         </div>
                     </div>
@@ -397,16 +400,16 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <div class="relative pr-4 pb-4" data-aos="fade-right">
                     <div class="absolute top-4 left-4 right-0 bottom-0 bg-secondary rounded-3xl -z-10"></div>
-                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sejarah PKK" class="rounded-3xl shadow-xl w-full object-cover h-[250px] sm:h-[350px] lg:h-[400px]">
+                    <img src="{{ asset('images/4.jpeg') }}" alt="Sejarah PKK" class="rounded-3xl shadow-xl w-full object-cover h-[250px] sm:h-[350px] lg:h-[400px]">
                 </div>
                 <div data-aos="fade-left">
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-3 text-tertiary">Sejarah Gerakan PKK</h2>
                     <h3 class="text-lg md:text-xl font-bold text-primary mb-6">Jejak Langkah Pengabdian</h3>
                     <p class="text-lg text-neutral leading-relaxed mb-6">
-                        Gerakan PKK pada awalnya berawal dari Kepanitiaan Pendidikan Kesejahteraan Keluarga yang didirikan untuk menanggulangi masalah gizi dan kesehatan di masyarakat. Seiring berjalannya waktu, PKK bertransformasi menjadi pilar kekuatan sosial yang masif.
+                        Gerakan Pemberdayaan dan Kesejahteraan Keluarga (PKK) tumbuh dari bawah yang diinisiasi pada tanggal 27 Desember 1972 melalui Surat Kawat Menteri Dalam Negeri No. SUS 3/5/12 kepada seluruh Gubernur di Indonesia. Langkah ini diambil setelah melihat keberhasilan program Home Economic Seminar di Bogor pada tahun 1957, yang kemudian berkembang menjadi gerakan Pendidikan Kesejahteraan Keluarga di Jawa Tengah pada tahun 1967 demi meningkatkan kesejahteraan keluarga yang menjadi unit terkecil dalam masyarakat.
                     </p>
                     <p class="text-lg text-neutral leading-relaxed mb-8">
-                        Kini, TP PKK tidak hanya berfokus pada kesehatan, namun telah merambah hingga pendidikan, pembinaan karakter, pelestarian lingkungan, dan ekonomi kreatif melalui UP2K. Kami bangga telah menjadi mitra strategis pemerintah dan sahabat terdekat masyarakat.
+                        Dalam perkembangannya, Gerakan PKK terus diperkuat oleh regulasi negara untuk mendukung program pembangunan nasional. Landasan hukum utama yang memperkokoh posisi PKK saat ini di antaranya adalah Undang-Undang Nomor 6 Tahun 2014 tentang Desa, Peraturan Presiden Nomor 99 Tahun 2017, serta Peraturan Menteri Dalam Negeri Nomor 18 Tahun 2018 tentang Lembaga Kemasyarakatan Desa dan Lembaga Adat Desa. Melalui aturan-aturan ini, PKK diakui secara legal sebagai mitra strategis pemerintah dari tingkat pusat hingga ke kelompok Dasawisma untuk menggerakkan partisipasi masyarakat.
                     </p>
                     <a href="#program" class="inline-flex items-center font-bold text-primary hover:text-primary-dark transition-colors group">
                         Lihat Peran Kami Saat Ini 
@@ -418,29 +421,41 @@
     </section>
 
     <!-- Team Section -->
-    <section id="tim" class="py-20 lg:py-32 bg-gray-50 border-y border-gray-100">
+    <section id="tim" class="py-20 lg:py-32 bg-gray-50 border-y border-gray-100" x-data="{ open: false, imgSrc: '', imgAlt: '', title: '', role: '', initials: '', hasPhoto: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Susunan Kepengurusan Inti</h2>
-                <p class="text-lg text-neutral">Pengelompokan tugas untuk pengurus inti gerakan PKK.</p>
+                <p class="text-lg text-neutral">Pengelompokan tugas untuk pengurus inti gerakan PKK. Klik kartu pengurus untuk memperbesar foto profil.</p>
             </div>
             
             <!-- Top Leaders Row (Ketua & Wakil Ketua) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto mb-12 justify-center">
                 <!-- Member 1: Ketua -->
-                <div data-aos="zoom-in" class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
-                        SG
-                    </div>
+                <div data-aos="zoom-in" 
+                     class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                     @click="open = true; hasPhoto = {{ file_exists(public_path('images/pengurus/susi.jpeg')) ? 'true' : 'false' }}; imgSrc = '{{ asset('images/pengurus/susi.jpeg') }}'; imgAlt = 'Hj. Susi Gantini, S.Si.'; title = 'Hj. Susi Gantini, S.Si.'; role = 'Ketua TP PKK'; initials = 'SG';">
+                    @if(file_exists(public_path('images/pengurus/susi.jpeg')))
+                        <img src="{{ asset('images/pengurus/susi.jpeg') }}" alt="Hj. Susi Gantini, S.Si." class="w-24 h-24 mx-auto rounded-full object-cover mb-6 border-4 border-white shadow-md">
+                    @else
+                        <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
+                            SG
+                        </div>
+                    @endif
                     <h3 class="text-xl font-bold text-tertiary mb-1">Hj. Susi Gantini, S.Si.</h3>
                     <p class="text-sm font-semibold text-primary">Ketua TP PKK</p>
                 </div>
                 <!-- Member 2: Wakil Ketua -->
-                <div data-aos="zoom-in" class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
-                        AD
-                    </div>
-                    <h3 class="text-xl font-bold text-tertiary mb-1">Adita</h3>
+                <div data-aos="zoom-in" 
+                     class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                     @click="open = true; hasPhoto = {{ file_exists(public_path('images/pengurus/Astria.jpeg')) ? 'true' : 'false' }}; imgSrc = '{{ asset('images/pengurus/Astria.jpeg') }}'; imgAlt = 'Astria Dita Oktavia, S.Kom.'; title = 'Astria Dita Oktavia, S.Kom.'; role = 'Wakil Ketua TP PKK'; initials = 'AD';">
+                    @if(file_exists(public_path('images/pengurus/Astria.jpeg')))
+                        <img src="{{ asset('images/pengurus/Astria.jpeg') }}" alt="Astria Dita Oktavia, S.Kom." class="w-24 h-24 mx-auto rounded-full object-cover mb-6 border-4 border-white shadow-md">
+                    @else
+                        <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
+                            AD
+                        </div>
+                    @endif
+                    <h3 class="text-xl font-bold text-tertiary mb-1">Astria Dita Oktavia, S.Kom.</h3>
                     <p class="text-sm font-semibold text-primary">Wakil Ketua TP PKK</p>
                 </div>
             </div>
@@ -448,36 +463,108 @@
             <!-- Supporting Board Row (Sekretaris & Bendahara) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-center">
                 <!-- Member 3: Sekretaris I -->
-                <div data-aos="zoom-in" class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
-                        SS
-                    </div>
+                <div data-aos="zoom-in" 
+                     class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                     @click="open = true; hasPhoto = {{ file_exists(public_path('images/pengurus/Sri.jpeg')) ? 'true' : 'false' }}; imgSrc = '{{ asset('images/pengurus/Sri.jpeg') }}'; imgAlt = 'Hj. Sri Teti Setiawati, S.Pd.I.'; title = 'Hj. Sri Teti Setiawati, S.Pd.I.'; role = 'Sekretaris I'; initials = 'SS';">
+                    @if(file_exists(public_path('images/pengurus/Sri.jpeg')))
+                        <img src="{{ asset('images/pengurus/Sri.jpeg') }}" alt="Hj. Sri Teti Setiawati, S.Pd.I." class="w-24 h-24 mx-auto rounded-full object-cover mb-6 border-4 border-white shadow-md">
+                    @else
+                        <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
+                            SS
+                        </div>
+                    @endif
                     <h3 class="text-xl font-bold text-tertiary mb-1">Hj. Sri Teti Setiawati, S.Pd.I.</h3>
                     <p class="text-sm font-semibold text-primary">Sekretaris I</p>
                 </div>
                 <!-- Member 4: Sekretaris II -->
-                <div data-aos="zoom-in" class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
-                        YS
-                    </div>
+                <div data-aos="zoom-in" 
+                     class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                     @click="open = true; hasPhoto = {{ file_exists(public_path('images/pengurus/Yusrina.jpeg')) ? 'true' : 'false' }}; imgSrc = '{{ asset('images/pengurus/Yusrina.jpeg') }}'; imgAlt = 'Yusrina, S.E.'; title = 'Yusrina, S.E.'; role = 'Sekretaris II'; initials = 'YS';">
+                    @if(file_exists(public_path('images/pengurus/Yusrina.jpeg')))
+                        <img src="{{ asset('images/pengurus/Yusrina.jpeg') }}" alt="Yusrina, S.E." class="w-24 h-24 mx-auto rounded-full object-cover mb-6 border-4 border-white shadow-md">
+                    @else
+                        <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
+                            YS
+                        </div>
+                    @endif
                     <h3 class="text-xl font-bold text-tertiary mb-1">Yusrina, S.E.</h3>
                     <p class="text-sm font-semibold text-primary">Sekretaris II</p>
                 </div>
                 <!-- Member 5: Bendahara I -->
-                <div data-aos="zoom-in" class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
-                        NM
-                    </div>
+                <div data-aos="zoom-in" 
+                     class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                     @click="open = true; hasPhoto = {{ file_exists(public_path('images/pengurus/Nina.jpeg')) ? 'true' : 'false' }}; imgSrc = '{{ asset('images/pengurus/Nina.jpeg') }}'; imgAlt = 'Nina Marlina, S.Pd.'; title = 'Nina Marlina, S.Pd.'; role = 'Bendahara I'; initials = 'NM';">
+                    @if(file_exists(public_path('images/pengurus/Nina.jpeg')))
+                        <img src="{{ asset('images/pengurus/Nina.jpeg') }}" alt="Nina Marlina, S.Pd." class="w-24 h-24 mx-auto rounded-full object-cover mb-6 border-4 border-white shadow-md">
+                    @else
+                        <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
+                            NM
+                        </div>
+                    @endif
                     <h3 class="text-xl font-bold text-tertiary mb-1">Nina Marlina, S.Pd.</h3>
                     <p class="text-sm font-semibold text-primary">Bendahara I</p>
                 </div>
                 <!-- Member 6: Bendahara II -->
-                <div data-aos="zoom-in" class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
-                        NZ
-                    </div>
+                <div data-aos="zoom-in" 
+                     class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center hover:shadow-soft hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                     @click="open = true; hasPhoto = {{ file_exists(public_path('images/pengurus/Nenden.jpeg')) ? 'true' : 'false' }}; imgSrc = '{{ asset('images/pengurus/Nenden.jpeg') }}'; imgAlt = 'Hj. Nenden Zunaedah, A.Md.'; title = 'Hj. Nenden Zunaedah, A.Md.'; role = 'Bendahara II'; initials = 'NZ';">
+                    @if(file_exists(public_path('images/pengurus/Nenden.jpeg')))
+                        <img src="{{ asset('images/pengurus/Nenden.jpeg') }}" alt="Hj. Nenden Zunaedah, A.Md." class="w-24 h-24 mx-auto rounded-full object-cover mb-6 border-4 border-white shadow-md">
+                    @else
+                        <div class="w-24 h-24 mx-auto bg-primary-light rounded-full flex items-center justify-center text-primary text-3xl font-bold mb-6 border-4 border-white shadow-md">
+                            NZ
+                        </div>
+                    @endif
                     <h3 class="text-xl font-bold text-tertiary mb-1">Hj. Nenden Zunaedah, A.Md.</h3>
                     <p class="text-sm font-semibold text-primary">Bendahara II</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup Modal Overlay -->
+        <div x-show="open" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+             @click.self="open = false"
+             style="display: none;">
+            
+            <!-- Modal Content Card -->
+            <div x-show="open"
+                 x-transition:enter="transition ease-out duration-300 transform"
+                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200 transform"
+                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+                 class="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-sm w-full relative border border-gray-100"
+                 @click.away="open = false">
+                
+                <!-- Close Button -->
+                <button @click="open = false" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-gray-700 hover:text-black flex items-center justify-center shadow-md transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                
+                <!-- Image or Avatar Container -->
+                <div class="relative bg-gray-100 aspect-square flex items-center justify-center overflow-hidden">
+                    <template x-if="hasPhoto">
+                        <img :src="imgSrc" :alt="imgAlt" class="w-full h-full object-cover">
+                    </template>
+                    <template x-if="!hasPhoto">
+                        <div class="w-full h-full bg-gradient-to-br from-primary-light to-blue-100 flex items-center justify-center">
+                            <span class="text-primary text-6xl font-extrabold" x-text="initials"></span>
+                        </div>
+                    </template>
+                </div>
+                
+                <!-- Details -->
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold text-tertiary mb-1" x-text="title"></h3>
+                    <p class="text-sm font-semibold text-primary" x-text="role"></p>
                 </div>
             </div>
         </div>
@@ -498,7 +585,7 @@
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     </div>
                     <h3 class="text-2xl font-bold text-tertiary mb-3">Pokja I <span class="text-lg font-semibold text-neutral block mt-1">(Pembinaan Karakter Keluarga)</span></h3>
-                    <p class="text-neutral leading-relaxed mb-8">Mengelola program Penghayatan dan Pengamalan Pancasila serta Gotong Royong untuk membangun mental spiritual dan kepedulian sosial masyarakat.</p>
+                    <p class="text-neutral leading-relaxed mb-8">Mengelola program Penghayatan dan Pengamalan Pancasila serta Gotong Royong. Fokus pada pembinaan karakter, kesadaran hukum (KADARKUM), bela negara (PKBN), pencegahan narkoba (KRISAN), ketahanan sosial, perlindungan anak dari kekerasan (KILAS), serta pemberdayaan lansia (LANSIAP) untuk membangun mental spiritual keluarga.</p>
                     <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
                         <h4 class="font-bold text-sm text-tertiary uppercase tracking-wider mb-4">Susunan Anggota</h4>
                         <ul class="space-y-3">
@@ -515,7 +602,7 @@
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                     </div>
                     <h3 class="text-2xl font-bold text-tertiary mb-3">Pokja II <span class="text-lg font-semibold text-neutral block mt-1">(Pendidikan & Peningkatan Ekonomi)</span></h3>
-                    <p class="text-neutral leading-relaxed mb-8">Fokus pada program Pendidikan dan Keterampilan, serta Pengembangan Kehidupan Berkoperasi melalui program UP2K untuk meningkatkan ekonomi keluarga.</p>
+                    <p class="text-neutral leading-relaxed mb-8">Mengelola program Pendidikan, Keterampilan, dan Pengembangan Kehidupan Berkoperasi. Fokus pada perluasan layanan PAUD, pencegahan anak tidak sekolah, pelatihan keterampilan berbasis digital dan potensi lokal lewat RUMAH DILAN, serta penguatan ekonomi keluarga melalui pengelolaan usaha ekonomi (UP2K PKK) dan inkubasi UMKM.</p>
                     <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
                         <h4 class="font-bold text-sm text-tertiary uppercase tracking-wider mb-4">Susunan Anggota</h4>
                         <ul class="space-y-3">
@@ -532,7 +619,7 @@
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     </div>
                     <h3 class="text-2xl font-bold text-tertiary mb-3">Pokja III <span class="text-lg font-semibold text-neutral block mt-1">(Penguatan Ketahanan Keluarga)</span></h3>
-                    <p class="text-neutral leading-relaxed mb-8">Mengelola program Pangan, Sandang, serta Perumahan dan Tata Laksana Rumah Tangga demi mewujudkan pemenuhan kebutuhan dasar keluarga yang layak.</p>
+                    <p class="text-neutral leading-relaxed mb-8">Mengelola program Pangan, Sandang, Perumahan, dan Tata Laksana Rumah Tangga. Fokus pada perwujudan ketahanan pangan berbasis masyarakat melalui KETAPANG-MAS (Aku Hatinya PKK), promosi sandang lokal budaya lewat GEMAS SANLOKA, serta pembinaan rumah sehat layak huni dan manajemen rumah tangga melalui REHARTA BERSERI.</p>
                     <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
                         <h4 class="font-bold text-sm text-tertiary uppercase tracking-wider mb-4">Susunan Anggota</h4>
                         <ul class="space-y-3">
@@ -549,7 +636,7 @@
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                     </div>
                     <h3 class="text-2xl font-bold text-tertiary mb-3">Pokja IV <span class="text-lg font-semibold text-neutral block mt-1">(Kesehatan Keluarga & Lingkungan)</span></h3>
-                    <p class="text-neutral leading-relaxed mb-8">Mengelola program Kesehatan, Kelestarian Lingkungan Hidup, dan Perencanaan Sehat, termasuk pendampingan Posyandu dan penyuluhan kesehatan.</p>
+                    <p class="text-neutral leading-relaxed mb-8">Mengelola program Kesehatan, Kelestarian Lingkungan Hidup, dan Perencanaan Sehat. Fokus pada percepatan penurunan stunting, pembiasaan perilaku hidup bersih dan sehat (PHBS), pembinaan keluarga sadar gizi, kelestarian lingkungan dan mitigasi bencana, serta edukasi keluarga berencana (KB) menuju keuangan dan perencanaan kehidupan sehat.</p>
                     <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
                         <h4 class="font-bold text-sm text-tertiary uppercase tracking-wider mb-4">Susunan Anggota</h4>
                         <ul class="space-y-3">

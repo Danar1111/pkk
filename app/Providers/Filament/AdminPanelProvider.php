@@ -49,6 +49,7 @@ class AdminPanelProvider extends PanelProvider
             ->font('Plus Jakarta Sans')
             ->brandName('LKP PKK')
             ->brandLogo(fn () => view('filament.logo'))
+            ->favicon(asset('images/logo.png'))
             ->darkMode(false)
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
