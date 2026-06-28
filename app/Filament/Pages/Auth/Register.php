@@ -15,6 +15,8 @@ use SensitiveParameter;
 
 class Register extends BaseRegister
 {
+    protected string $view = 'filament.pages.auth.register';
+
     public function form(Schema $schema): Schema
     {
         return $schema

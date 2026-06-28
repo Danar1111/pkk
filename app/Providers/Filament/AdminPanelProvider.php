@@ -1713,18 +1713,11 @@ class AdminPanelProvider extends PanelProvider
                                         }
                                     }
                                 }
-                            });
-                        }
-                    </script>
-                    '
-                    : '
-                    <a href="/" class="back-to-home">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 1.15rem; height: 1.15rem; display: inline-block; vertical-align: middle;">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                        </svg>
-                        <span style="display: inline-block; vertical-align: middle; margin-left: 0.125rem;">Kembali ke Halaman Awal</span>
-                    </a>
-                    '
+                             });
+                         }
+                     </script>
+                     '
+                     : ''
             )
             ->renderHook(
                 'panels::body.end',
